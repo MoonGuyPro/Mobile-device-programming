@@ -20,7 +20,6 @@ namespace Logic.Interfaces
         void AddVote(VoteModel vote);
         void UpdateVote(VoteModel vote);
         void DeleteVote(int id);
-
-        // Dodaj dodatkowe metody związane z logiką wyborczą
+        Task SendVotingReminderPeriodically();
     }
 }

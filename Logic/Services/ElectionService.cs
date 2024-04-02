@@ -70,6 +70,30 @@ namespace Logic.Services
             _voteRepository.DeleteVote(id);
         }
 
-        // Implementuj dodatkowe metody związane z logiką wyborczą
+        // Metoda symulująca okresowe przypomnienie wyborcom o dniu głosowania
+        public async Task SendVotingReminderPeriodically()
+        {
+            while (true)
+            {
+                // Symulacja wysłania przypomnienia co 7 dni przed dniem wyborów
+                DateTime electionDay = new DateTime(2024, 10, 10); // Przykładowa data wyborów
+                DateTime reminderDate = electionDay.AddDays(-7); // Przypomnienie 7 dni przed wyborami
+
+                // Sprawdź, czy aktualna data jest równa daty przypomnienia
+                if (DateTime.Today == reminderDate)
+                {
+                    SendVotingReminder();
+                }
+
+                await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
+            }
+        }
+
+        // Symulacja wysłania przypomnienia o głosowaniu
+        private void SendVotingReminder()
+        {
+            Console.WriteLine("Przypomnienie: Za tydzień są wybory prezydenckie! Zapraszamy do głosowania.");
+            // Tutaj można dodać logikę faktycznego wysłania przypomnienia, na przykład przez e-mail lub wiadomość tekstową
+        }
     }
 }
