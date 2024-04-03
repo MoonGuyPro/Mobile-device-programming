@@ -7,18 +7,27 @@ using System.Windows.Input;
 
 namespace ViewModel
 {
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
-        public bool CanExecute(object? parameter)
+        private readonly Action<object> execute;
+        private readonly Func<object, bool> canExecute;
+
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            throw new NotImplementedException();
+            this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            this.canExecute = canExecute;
         }
 
-        public void Execute(object? parameter)
+        public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            return canExecute == null || canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            execute(parameter);
         }
     }
 
