@@ -19,7 +19,8 @@ namespace ViewModel
         public CandidateModel SelectedCandidate
         {
             get => _selectedCandidate;
-            set => _selectedCandidate = value; // Consider implementing INotifyPropertyChanged
+            set => _selectedCandidate = value;
+
         }
         public ObservableCollection<CandidateModel> Candidates
         {
@@ -58,9 +59,15 @@ namespace ViewModel
 
         private void VoteForCandidate(object candidateId)
         {
-            // Implement the voting logic here
-            // For demonstration, you might simply display a message or update a count
-            System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {candidateId}");
+             if (_selectedCandidate != null)
+             {
+                 System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
+             }
+             else
+             {
+                 System.Diagnostics.Debug.WriteLine("No candidate selected.");
+             }
+
         }
 
 
