@@ -9,7 +9,7 @@ using Data.Interfaces;
 
 namespace Logic.Services
 {
-    internal class ElectionService : IElectionService
+    public class ElectionService : IElectionService
     {
         private readonly ICandidateRepository _candidateRepository;
         private readonly IVoteRepository _voteRepository;
