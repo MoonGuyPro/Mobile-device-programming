@@ -13,6 +13,7 @@ namespace ViewModel
     {
         private readonly IElectionService electionService;
         private ObservableCollection<CandidateModel> _candidates;
+        private int _daysToElection;
         public RelayCommand VoteCommand { get; private set; }
 
         private CandidateModel _selectedCandidate;
@@ -31,6 +32,16 @@ namespace ViewModel
                 OnPropertyChanged(nameof(Candidates));
             }
         }
+        public int DaysToElection
+        {
+            get => _daysToElection;
+            set
+            {
+                _daysToElection = value;
+                OnPropertyChanged(nameof(DaysToElection));
+            }
+        }
+
         public MainViewModel()
         {
             // Populate with example candidates
@@ -43,12 +54,15 @@ namespace ViewModel
                 new CandidateModel { Id = 5, Name = "Candidate 5" }
             };
             VoteCommand = new RelayCommand(VoteForCandidate);
+
         }
 
         public MainViewModel(IElectionService electionService)
         {
             this.electionService = electionService;
+            electionService.UpdateDaysToElection += OnUpdateDaysToElection;
             LoadCandidates();
+            VoteCommand = new RelayCommand(VoteForCandidate);
         }
 
         private void LoadCandidates()
@@ -59,7 +73,7 @@ namespace ViewModel
 
         private void VoteForCandidate(object candidateId)
         {
-             if (_selectedCandidate != null)
+            if (_selectedCandidate != null)
              {
                  System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
              }
@@ -70,6 +84,10 @@ namespace ViewModel
 
         }
 
-
+        private void OnUpdateDaysToElection(object sender, int days)
+        {
+            DaysToElection = days;
+        }
+        
     }
 }

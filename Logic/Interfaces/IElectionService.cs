@@ -21,5 +21,6 @@ namespace Logic.Interfaces
         void UpdateVote(VoteModel vote);
         void DeleteVote(int id);
         Task SendVotingReminderPeriodically();
+        event EventHandler<int> UpdateDaysToElection;
     }
 }

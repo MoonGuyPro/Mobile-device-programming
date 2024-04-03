@@ -13,6 +13,7 @@ namespace Logic.Services
     {
         private readonly ICandidateRepository _candidateRepository;
         private readonly IVoteRepository _voteRepository;
+        public event EventHandler<int> UpdateDaysToElection;
 
         public ElectionService(ICandidateRepository candidateRepository, IVoteRepository voteRepository)
         {
@@ -70,30 +71,20 @@ namespace Logic.Services
             _voteRepository.DeleteVote(id);
         }
 
-        // Metoda symulująca okresowe przypomnienie wyborcom o dniu głosowania
         public async Task SendVotingReminderPeriodically()
         {
             while (true)
             {
-                // Symulacja wysłania przypomnienia co 7 dni przed dniem wyborów
-                DateTime electionDay = new DateTime(2024, 10, 10); // Przykładowa data wyborów
-                DateTime reminderDate = electionDay.AddDays(-7); // Przypomnienie 7 dni przed wyborami
+                DateTime electionDay = new DateTime(2024, 05, 10); // Przykładowa data wyborów
+                TimeSpan timeRemaining = electionDay - DateTime.Today; // Czas pozostały do wyborów
+                System.Diagnostics.Debug.WriteLine(timeRemaining);
 
-                // Sprawdź, czy aktualna data jest równa daty przypomnienia
-                if (DateTime.Today == reminderDate)
-                {
-                    SendVotingReminder();
-                }
+                // Aktualizacja liczby dni pozostałych do wyborów w MainViewModel
+                UpdateDaysToElection?.Invoke(this, timeRemaining.Days);
 
+                // Poczekaj jeden dzień
                 await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
             }
-        }
-
-        // Symulacja wysłania przypomnienia o głosowaniu
-        private void SendVotingReminder()
-        {
-            Console.WriteLine("Przypomnienie: Za tydzień są wybory prezydenckie! Zapraszamy do głosowania.");
-            // Tutaj można dodać logikę faktycznego wysłania przypomnienia, na przykład przez e-mail lub wiadomość tekstową
         }
     }
 }

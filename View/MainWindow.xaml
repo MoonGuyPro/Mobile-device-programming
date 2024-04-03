@@ -13,6 +13,7 @@
     <Grid>
         <ListBox x:Name="CandidatesList" ItemsSource="{Binding Candidates}" DisplayMemberPath="Name"
          SelectedItem="{Binding SelectedCandidate, Mode=TwoWay}"/>
-        <Button Content="Vote" Command="{Binding VoteCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Button Content="Vote" Command="{Binding VoteCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="57" Width="93"/>
+        <TextBlock Text="{Binding DaysToElection}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="24" Margin="0,387,0,0" Height="22"/>
     </Grid>
 </Window>
