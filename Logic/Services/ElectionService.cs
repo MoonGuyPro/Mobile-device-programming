@@ -9,11 +9,11 @@ using Data.Interfaces;
 
 namespace Logic.Services
 {
-    public class ElectionService : IElectionService
+    internal class ElectionService : IElectionService
     {
         private readonly ICandidateRepository _candidateRepository;
         private readonly IVoteRepository _voteRepository;
-        public event EventHandler<int> UpdateDaysToElection;
+        public override event EventHandler<int> UpdateDaysToElection;
 
         public ElectionService(ICandidateRepository candidateRepository, IVoteRepository voteRepository)
         {
@@ -21,57 +21,57 @@ namespace Logic.Services
             _voteRepository = voteRepository;
         }
 
-        public List<CandidateModel> GetAllCandidates()
+        public override List<CandidateModel> GetAllCandidates()
         {
             return _candidateRepository.GetAllCandidates();
         }
 
-        public CandidateModel GetCandidateById(int id)
+        public override CandidateModel GetCandidateById(int id)
         {
             return _candidateRepository.GetCandidateById(id);
         }
 
-        public void AddCandidate(CandidateModel candidate)
+        public override void AddCandidate(CandidateModel candidate)
         {
             _candidateRepository.AddCandidate(candidate);
         }
 
-        public void UpdateCandidate(CandidateModel candidate)
+        public override void UpdateCandidate(CandidateModel candidate)
         {
             _candidateRepository.UpdateCandidate(candidate);
         }
 
-        public void DeleteCandidate(int id)
+        public override void DeleteCandidate(int id)
         {
             _candidateRepository.DeleteCandidate(id);
         }
 
-        public List<VoteModel> GetAllVotes()
+        public override List<VoteModel> GetAllVotes()
         {
             return _voteRepository.GetAllVotes();
         }
 
-        public VoteModel GetVoteById(int id)
+        public override VoteModel GetVoteById(int id)
         {
             return _voteRepository.GetVoteById(id);
         }
 
-        public void AddVote(VoteModel vote)
+        public override void AddVote(VoteModel vote)
         {
             _voteRepository.AddVote(vote);
         }
 
-        public void UpdateVote(VoteModel vote)
+        public override void UpdateVote(VoteModel vote)
         {
             _voteRepository.UpdateVote(vote);
         }
 
-        public void DeleteVote(int id)
+        public override void DeleteVote(int id)
         {
             _voteRepository.DeleteVote(id);
         }
 
-        public async Task SendVotingReminderPeriodically()
+        public override async Task SendVotingReminderPeriodically()
         {
             while (true)
             {

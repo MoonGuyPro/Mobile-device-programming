@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logic.Interfaces;
+using Logic.Services;
 using Data.Models;
+using Model;
 
 namespace ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly IElectionService electionService;
+        //private readonly IElectionService electionService;
+        private Model.Model model;
         private ObservableCollection<CandidateModel> _candidates;
         private int _daysToElection;
         public RelayCommand VoteCommand { get; private set; }
@@ -44,6 +47,7 @@ namespace ViewModel
 
         public MainViewModel()
         {
+            model = new Model.Model();
             // Populate with example candidates
             Candidates = new ObservableCollection<CandidateModel>
             {
@@ -55,21 +59,23 @@ namespace ViewModel
             };
             VoteCommand = new RelayCommand(VoteForCandidate);
 
+            // Zarejestruj się na zdarzenie UpdateDaysToElection
+            model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
+            Task.Run(() => model.GetService().SendVotingReminderPeriodically());
         }
 
-        public MainViewModel(IElectionService electionService)
+/*        public MainViewModel(IElectionService electionService)
         {
             this.electionService = electionService;
-            electionService.UpdateDaysToElection += OnUpdateDaysToElection;
             LoadCandidates();
             VoteCommand = new RelayCommand(VoteForCandidate);
-        }
+        }*/
 
-        private void LoadCandidates()
+/*        private void LoadCandidates()
         {
-            var candidates = electionService.GetAllCandidates();
+            var candidates = model.GetService().GetAllCandidates();
             Candidates = new ObservableCollection<CandidateModel>(candidates);
-        }
+        }*/
 
         private void VoteForCandidate(object candidateId)
         {

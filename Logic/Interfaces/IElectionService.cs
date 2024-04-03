@@ -4,23 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using Data.Interfaces;
+using Logic.Services;
 
 namespace Logic.Interfaces
 {
-    public interface IElectionService
+    public abstract class IElectionService
     {
-        List<CandidateModel> GetAllCandidates();
-        CandidateModel GetCandidateById(int id);
-        void AddCandidate(CandidateModel candidate);
-        void UpdateCandidate(CandidateModel candidate);
-        void DeleteCandidate(int id);
+        public abstract List<CandidateModel> GetAllCandidates();
+        public abstract CandidateModel GetCandidateById(int id);
+        public abstract void AddCandidate(CandidateModel candidate);
+        public abstract void UpdateCandidate(CandidateModel candidate);
+        public abstract void DeleteCandidate(int id);
 
-        List<VoteModel> GetAllVotes();
-        VoteModel GetVoteById(int id);
-        void AddVote(VoteModel vote);
-        void UpdateVote(VoteModel vote);
-        void DeleteVote(int id);
-        Task SendVotingReminderPeriodically();
-        event EventHandler<int> UpdateDaysToElection;
+        public abstract List<VoteModel> GetAllVotes();
+        public abstract VoteModel GetVoteById(int id);
+        public abstract void AddVote(VoteModel vote);
+        public abstract void UpdateVote(VoteModel vote);
+        public abstract void DeleteVote(int id);
+        public abstract Task SendVotingReminderPeriodically();
+        public abstract event EventHandler<int> UpdateDaysToElection;
+
+        public static IElectionService CreateInstance(ICandidateRepository _candidateRepository, IVoteRepository _voteRepository)
+        {
+            return new ElectionService(_candidateRepository, _voteRepository);
+        }
     }
 }
