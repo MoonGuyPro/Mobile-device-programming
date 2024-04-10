@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class CandidateModel
+    public class CandidateModel : ICandidateModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        // inne właściwości kandydata, np. program wyborczy
+
+        public CandidateModel(int id, string name) 
+        {
+            Id = id;
+            Name = name;    
+        }
     }
 }

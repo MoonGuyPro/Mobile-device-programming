@@ -8,17 +8,27 @@ using Data.Repositories;
 
 namespace Data
 {
+
+    public interface ICandidateModel
+    {
+        int Id { get; set; }
+        string Name { get; set; }
+    }
+
+    public interface ICandidateRepository
+    {
+        public void AddCandidate(int id, string name);
+        public ICandidateModel RemoveCandidate(int id);
+        public List<ICandidateModel> GetAllCandidates();
+    }
+
     public abstract class CandidateRepositoryAbstract
     {
-        public abstract List<CandidateModel> GetAllCandidates();
-        public abstract CandidateModel GetCandidateById(int id);
-        public abstract void AddCandidate(CandidateModel candidate);
-        public abstract void UpdateCandidate(CandidateModel candidate);
-        public abstract void DeleteCandidate(int id);
-
-        public static CandidateRepositoryAbstract? CreateInstance()
+         public static CandidateRepositoryAbstract Create()
         {
-            return new InMemoryCandidateRepository();
+            return new CandidateApi();
         }
+
+        public abstract ICandidateRepository GetCandidateRepository();
     }
 }
