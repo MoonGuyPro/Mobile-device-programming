@@ -47,8 +47,8 @@ namespace ViewModel
         public MainViewModel()
         {
             this.model = new Model.Model(null);
+            Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
-
             // Zarejestruj się na zdarzenie UpdateDaysToElection
             model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             Task.Run(() => model.GetService().SendVotingReminderPeriodically());
