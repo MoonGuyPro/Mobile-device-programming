@@ -16,7 +16,7 @@ namespace Logic.Services
 
         public ElectionService(CandidateRepositoryAbstract candidateRepositoryAbstract) : base(candidateRepositoryAbstract)
         {
-            _candidates = new 
+            _candidates = new CandidateCollection(candidateRepositoryAbstract.GetCandidateRepository());
         }
 
         public override ICandidateCollection GetCandidates()

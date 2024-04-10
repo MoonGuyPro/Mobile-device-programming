@@ -18,9 +18,20 @@ namespace Logic
 
         public List<ICandidatePerson> GetCandidates()
         {
-            throw new NotImplementedException();
+            return _candidateRepository.GetAllCandidates()
+                .Select(candidatePerson => new CandidatePerson(candidatePerson))
+                .Cast<ICandidatePerson>().ToList();
+
+
+           // throw new NotImplementedException();
+            //List<ICandidatePerson> candidates;
+           /* foreach(ICandidateModel candidate in _candidateRepository.GetAllCandidates())
+            {
+                ICandidatePerson(candidate)
+
+                candidates.Add(CandidatePerson(candidate));
+            }
+            */
         }
-
-
     }
 }
