@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logic.Interfaces;
 using Data.Models;
+using Data;
 using Data.Interfaces;
 
 namespace Logic.Services
 {
-    public class ElectionService : IElectionService
+    internal class ElectionService : ElectionServiceAbstract
     {
-        private readonly ICandidateRepository _candidateRepository;
+        private readonly CandidateRepositoryAbstract _candidateRepository;
         private readonly IVoteRepository _voteRepository;
         public override event EventHandler<int> UpdateDaysToElection;
 
-        public ElectionService(ICandidateRepository candidateRepository, IVoteRepository voteRepository)
+        public ElectionService(CandidateRepositoryAbstract? candidateRepository, IVoteRepository voteRepository)
         {
-            _candidateRepository = candidateRepository;
+           _candidateRepository = candidateRepository;
             _voteRepository = voteRepository;
         }
 

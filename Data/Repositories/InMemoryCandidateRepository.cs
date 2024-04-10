@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
 using Data.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace Data.Repositories
 {
-    public class InMemoryCandidateRepository : ICandidateRepository
+    internal class InMemoryCandidateRepository : CandidateRepositoryAbstract
     {
         private List<CandidateModel> _candidates;
 
@@ -16,24 +17,29 @@ namespace Data.Repositories
         {
             _candidates = new List<CandidateModel>();
             // Inicjalizacja kandydatów
+            _candidates.Add(new CandidateModel { Id = 1, Name = "Candidate 1" });
+            _candidates.Add(new CandidateModel { Id = 2, Name = "Candidate 2" });
+            _candidates.Add(new CandidateModel { Id = 3, Name = "Candidate 3" });
+            _candidates.Add(new CandidateModel { Id = 4, Name = "Candidate 4" });
+            _candidates.Add(new CandidateModel { Id = 5, Name = "Candidate 5" });
         }
 
-        public List<CandidateModel> GetAllCandidates()
+        public override List<CandidateModel> GetAllCandidates()
         {
             return _candidates;
         }
 
-        public CandidateModel GetCandidateById(int id)
+        public override CandidateModel GetCandidateById(int id)
         {
             return _candidates.FirstOrDefault(c => c.Id == id);
         }
 
-        public void AddCandidate(CandidateModel candidate)
+        public override void AddCandidate(CandidateModel candidate)
         {
             _candidates.Add(candidate);
         }
 
-        public void UpdateCandidate(CandidateModel candidate)
+        public override void UpdateCandidate(CandidateModel candidate)
         {
             var existingCandidate = _candidates.FirstOrDefault(c => c.Id == candidate.Id);
             if (existingCandidate != null)
@@ -44,7 +50,7 @@ namespace Data.Repositories
             }
         }
 
-        public void DeleteCandidate(int id)
+        public override void DeleteCandidate(int id)
         {
             _candidates.RemoveAll(c => c.Id == id);
         }

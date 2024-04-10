@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
 using Data.Interfaces;
+using Data;
+using Data.Repositories;
 using Logic.Services;
 
-namespace Logic.Interfaces
+namespace Logic
 {
-    public abstract class IElectionService
+    public abstract class ElectionServiceAbstract
     {
         public abstract List<CandidateModel> GetAllCandidates();
         public abstract CandidateModel GetCandidateById(int id);
@@ -25,9 +27,9 @@ namespace Logic.Interfaces
         public abstract Task SendVotingReminderPeriodically();
         public abstract event EventHandler<int> UpdateDaysToElection;
 
-        public static IElectionService CreateInstance(ICandidateRepository _candidateRepository, IVoteRepository _voteRepository)
+        public static ElectionServiceAbstract CreateInstance(IVoteRepository _voteRepository, CandidateRepositoryAbstract? _candidateRepository = null)
         {
-            return new ElectionService(_candidateRepository, _voteRepository);
+            return new ElectionService(_candidateRepository ?? CandidateRepositoryAbstract.CreateInstance(), _voteRepository);
         }
     }
 }

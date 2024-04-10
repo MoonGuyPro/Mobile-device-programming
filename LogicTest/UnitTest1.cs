@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+/*using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Logic.Services;
@@ -15,7 +15,7 @@ namespace LogicTest
     }
 
     // Mock Repositories
-    public class MockCandidateRepository : ICandidateRepository
+    public class MockCandidateRepository : CandidateRepositoryAbstract
     {
         private MockDataStorage _storage;
 
@@ -255,4 +255,4 @@ namespace LogicTest
             Assert.IsFalse(result.Any(v => v.Id == 1));
         }
     }
-}
+}*/

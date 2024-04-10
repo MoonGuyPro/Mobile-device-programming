@@ -4,9 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logic.Interfaces;
-using Logic.Services;
-using Data.Models;
 using Model;
 
 namespace ViewModel
@@ -15,11 +12,11 @@ namespace ViewModel
     {
         //private readonly IElectionService electionService;
         private Model.Model model;
-        private ObservableCollection<CandidateModel> _candidates;
+        //private ObservableCollection<CandidateModel> _candidates;
         private int _daysToElection;
         public RelayCommand VoteCommand { get; private set; }
 
-        private CandidateModel _selectedCandidate;
+/*        private CandidateModel _selectedCandidate;
         public CandidateModel SelectedCandidate
         {
             get => _selectedCandidate;
@@ -34,7 +31,7 @@ namespace ViewModel
                 _candidates = value;
                 OnPropertyChanged(nameof(Candidates));
             }
-        }
+        }*/
         public int DaysToElection
         {
             get => _daysToElection;
@@ -48,15 +45,6 @@ namespace ViewModel
         public MainViewModel()
         {
             model = new Model.Model();
-            // Populate with example candidates
-            Candidates = new ObservableCollection<CandidateModel>
-            {
-                new CandidateModel { Id = 1, Name = "Candidate 1" },
-                new CandidateModel { Id = 2, Name = "Candidate 2" },
-                new CandidateModel { Id = 3, Name = "Candidate 3" },
-                new CandidateModel { Id = 4, Name = "Candidate 4" },
-                new CandidateModel { Id = 5, Name = "Candidate 5" }
-            };
             VoteCommand = new RelayCommand(VoteForCandidate);
 
             // Zarejestruj się na zdarzenie UpdateDaysToElection
@@ -79,14 +67,14 @@ namespace ViewModel
 
         private void VoteForCandidate(object candidateId)
         {
-            if (_selectedCandidate != null)
+/*            if (_selectedCandidate != null)
              {
                  System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
              }
              else
              {
                  System.Diagnostics.Debug.WriteLine("No candidate selected.");
-             }
+             }*/
 
         }
 
