@@ -38,5 +38,9 @@ namespace Logic
         }
 
         public abstract ICandidateCollection GetCandidates();
+
+        public abstract event EventHandler<int> UpdateDaysToElection;
+        public abstract Task SendVotingReminderPeriodically();
+
     }
 }

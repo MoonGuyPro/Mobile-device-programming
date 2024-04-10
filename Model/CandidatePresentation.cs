@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Logic;
 
 namespace Model
 {
@@ -13,9 +14,10 @@ namespace Model
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public CandidatePresentation()
+        public CandidatePresentation(ICandidatePerson candidate)
         {
-
+            Id = candidate.Id;
+            Name = candidate.Name;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -10,20 +10,20 @@ namespace ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        //private readonly IElectionService electionService;
         private Model.Model model;
-        //private ObservableCollection<CandidateModel> _candidates;
+        private ObservableCollection<CandidatePresentation> _candidates;
+        private CandidatePresentation _selectedCandidate;
         private int _daysToElection;
         public RelayCommand VoteCommand { get; private set; }
 
-/*        private CandidateModel _selectedCandidate;
-        public CandidateModel SelectedCandidate
+        public CandidatePresentation SelectedCandidate
         {
             get => _selectedCandidate;
             set => _selectedCandidate = value;
 
         }
-        public ObservableCollection<CandidateModel> Candidates
+
+        public ObservableCollection<CandidatePresentation> Candidates
         {
             get => _candidates;
             set
@@ -31,7 +31,9 @@ namespace ViewModel
                 _candidates = value;
                 OnPropertyChanged(nameof(Candidates));
             }
-        }*/
+        }
+
+
         public int DaysToElection
         {
             get => _daysToElection;
@@ -44,12 +46,12 @@ namespace ViewModel
 
         public MainViewModel()
         {
-            model = new Model.Model();
+            this.model = new Model.Model(null);
             VoteCommand = new RelayCommand(VoteForCandidate);
 
             // Zarejestruj się na zdarzenie UpdateDaysToElection
-            //model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
-            //Task.Run(() => model.GetService().SendVotingReminderPeriodically());
+            model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
+            Task.Run(() => model.GetService().SendVotingReminderPeriodically());
         }
 
 /*        public MainViewModel(IElectionService electionService)
@@ -59,22 +61,22 @@ namespace ViewModel
             VoteCommand = new RelayCommand(VoteForCandidate);
         }*/
 
-/*        private void LoadCandidates()
+        private void LoadCandidates()
         {
-            var candidates = model.GetService().GetAllCandidates();
-            Candidates = new ObservableCollection<CandidateModel>(candidates);
-        }*/
+            var candidates = model.candidateRepositoryPresentation.GetCandidates();
+            Candidates = new ObservableCollection<CandidatePresentation>(candidates);
+        }
 
         private void VoteForCandidate(object candidateId)
         {
-/*            if (_selectedCandidate != null)
+           if (_selectedCandidate != null)
              {
                  System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
              }
              else
              {
                  System.Diagnostics.Debug.WriteLine("No candidate selected.");
-             }*/
+             }
 
         }
 

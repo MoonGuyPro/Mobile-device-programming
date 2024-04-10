@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,17 +9,20 @@ namespace Model
 {
     public class Model
     {
-        private ElectionServiceAbstract _electionService;
+        private ElectionServiceAbstract electionService;
 
-        public Model()
+        public CandidateRepositoryPresentation candidateRepositoryPresentation { get; private set; }
+
+        public Model(ElectionServiceAbstract? electionServiceAbstract)
         {
-            //_electionService = ElectionServiceAbstract.CreateInstance(null, null);
-           // _electionService.GetAllCandidates();
+            this.electionService = electionServiceAbstract == null ? ElectionServiceAbstract.Create() : electionServiceAbstract;
+            this.electionService.GetCandidates();
+            this.candidateRepositoryPresentation = new CandidateRepositoryPresentation(this.electionService.GetCandidates());
         }
 
         public ElectionServiceAbstract GetService()
         {
-            return _electionService;
+            return this.electionService;
         }
 
     }

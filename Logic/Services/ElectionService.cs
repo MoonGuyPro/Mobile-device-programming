@@ -24,23 +24,25 @@ namespace Logic.Services
             return _candidates;
         }
 
-        //public override event EventHandler<int> UpdateDaysToElection;
+        public override event EventHandler<int> UpdateDaysToElection;
+
+        public override async Task SendVotingReminderPeriodically()
+        {
+            while (true)
+            {
+                DateTime electionDay = new DateTime(2024, 05, 10); // Przykładowa data wyborów
+                TimeSpan timeRemaining = electionDay - DateTime.Today; // Czas pozostały do wyborów
+                System.Diagnostics.Debug.WriteLine(timeRemaining);
+
+                // Aktualizacja liczby dni pozostałych do wyborów w MainViewModel
+                UpdateDaysToElection?.Invoke(this, timeRemaining.Days);
+
+                // Poczekaj jeden dzień
+                await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
+            }
+        }
 
 
-        /*        public override async Task SendVotingReminderPeriodically()
-                {
-                    while (true)
-                    {
-                        DateTime electionDay = new DateTime(2024, 05, 10); // Przykładowa data wyborów
-                        TimeSpan timeRemaining = electionDay - DateTime.Today; // Czas pozostały do wyborów
-                        System.Diagnostics.Debug.WriteLine(timeRemaining);
 
-                        // Aktualizacja liczby dni pozostałych do wyborów w MainViewModel
-                        UpdateDaysToElection?.Invoke(this, timeRemaining.Days);
-
-                        // Poczekaj jeden dzień
-                        await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
-                    }
-                }*/
     }
 }
