@@ -1,13 +1,44 @@
-/*using Data.Models;
-using Data.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Data;
 
 namespace DataTest
 {
     [TestClass]
     public class UnitTest1
     {
+        private CandidateRepositoryAbstract PrepareData()
+        {
+            CandidateRepositoryAbstract data = CandidateRepositoryAbstract.Create();
+            return data;
+        }
+        [TestMethod]
+        public void AddCandidate()
+        {
+            CandidateRepositoryAbstract data = PrepareData();
+
+            data.GetCandidateRepository().AddCandidate(10,"Zbysiu");
+          
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(5).Name, "Zbysiu");
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(5).Id, 10);
+
+        }
+        public void CreateCandidates()
+        {
+            CandidateRepositoryAbstract data = PrepareData();
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 5);
+        }
+
+        [TestMethod]
+        public void DeleteCandidate()
+        {
+            CandidateRepositoryAbstract data = PrepareData();
+
+            data.GetCandidateRepository().RemoveCandidate(1);
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 4);
+        }
+
+        /*
         [TestMethod]
         public void AddAndGetCandidate()
         {
@@ -70,6 +101,6 @@ namespace DataTest
 
             // Assert
             Assert.IsNull(retrievedVote);
-        }
+        }*/
     }
-}*/
+}

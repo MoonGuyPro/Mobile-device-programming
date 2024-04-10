@@ -11,7 +11,7 @@ namespace Data.Repositories
 {
     internal class CandidateRepository : ICandidateRepository
     {
-        private List<CandidateModel> _candidates;
+        private List<CandidateModel> _candidates = new List<CandidateModel>();
 
         public CandidateRepository()
         {
@@ -36,9 +36,9 @@ namespace Data.Repositories
             return candidates;
         }
 
-        public ICandidateModel RemoveCandidate(int id)
+        public void RemoveCandidate(int id)
         {
-            throw new NotImplementedException();
+            _candidates.RemoveAt(id-1);
         }
     }
 }

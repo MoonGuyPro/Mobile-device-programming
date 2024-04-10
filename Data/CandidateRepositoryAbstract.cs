@@ -18,7 +18,7 @@ namespace Data
     public interface ICandidateRepository
     {
         public void AddCandidate(int id, string name);
-        public ICandidateModel RemoveCandidate(int id);
+        public void RemoveCandidate(int id);
         public List<ICandidateModel> GetAllCandidates();
     }
 
