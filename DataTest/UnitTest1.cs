@@ -23,6 +23,7 @@ namespace DataTest
             Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(5).Id, 10);
 
         }
+        [TestMethod]
         public void CreateCandidates()
         {
             CandidateRepositoryAbstract data = PrepareData();

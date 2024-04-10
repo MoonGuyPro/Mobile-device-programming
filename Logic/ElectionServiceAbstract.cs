@@ -13,8 +13,8 @@ namespace Logic
 {
     public interface ICandidatePerson
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get;}
+        public string Name { get;}
     }
 
     public interface ICandidateCollection
