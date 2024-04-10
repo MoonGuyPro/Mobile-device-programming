@@ -13,8 +13,8 @@ namespace Model
 
         public Model()
         {
-            _electionService = ElectionServiceAbstract.CreateInstance(null, null);
-            _electionService.GetAllCandidates();
+            //_electionService = ElectionServiceAbstract.CreateInstance(null, null);
+           // _electionService.GetAllCandidates();
         }
 
         public ElectionServiceAbstract GetService()
