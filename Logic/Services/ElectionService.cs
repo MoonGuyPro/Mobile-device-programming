@@ -6,85 +6,41 @@ using System.Threading.Tasks;
 using Data.Models;
 using Data;
 using Data.Interfaces;
+using Logic;
 
 namespace Logic.Services
 {
     internal class ElectionService : ElectionServiceAbstract
     {
-        private readonly CandidateRepositoryAbstract _candidateRepository;
-        private readonly IVoteRepository _voteRepository;
-        public override event EventHandler<int> UpdateDaysToElection;
+        private readonly ICandidateCollection _candidates;
 
-        public ElectionService(CandidateRepositoryAbstract? candidateRepository, IVoteRepository voteRepository)
+        public ElectionService(CandidateRepositoryAbstract candidateRepositoryAbstract) : base(candidateRepositoryAbstract)
         {
-           _candidateRepository = candidateRepository;
-            _voteRepository = voteRepository;
+            _candidates = new 
         }
 
-        public override List<CandidateModel> GetAllCandidates()
+        public override ICandidateCollection GetCandidates()
         {
-            return _candidateRepository.GetAllCandidates();
+            return _candidates;
         }
 
-        public override CandidateModel GetCandidateById(int id)
-        {
-            return _candidateRepository.GetCandidateById(id);
-        }
+        //public override event EventHandler<int> UpdateDaysToElection;
 
-        public override void AddCandidate(CandidateModel candidate)
-        {
-            _candidateRepository.AddCandidate(candidate);
-        }
 
-        public override void UpdateCandidate(CandidateModel candidate)
-        {
-            _candidateRepository.UpdateCandidate(candidate);
-        }
+        /*        public override async Task SendVotingReminderPeriodically()
+                {
+                    while (true)
+                    {
+                        DateTime electionDay = new DateTime(2024, 05, 10); // Przykładowa data wyborów
+                        TimeSpan timeRemaining = electionDay - DateTime.Today; // Czas pozostały do wyborów
+                        System.Diagnostics.Debug.WriteLine(timeRemaining);
 
-        public override void DeleteCandidate(int id)
-        {
-            _candidateRepository.DeleteCandidate(id);
-        }
+                        // Aktualizacja liczby dni pozostałych do wyborów w MainViewModel
+                        UpdateDaysToElection?.Invoke(this, timeRemaining.Days);
 
-        public override List<VoteModel> GetAllVotes()
-        {
-            return _voteRepository.GetAllVotes();
-        }
-
-        public override VoteModel GetVoteById(int id)
-        {
-            return _voteRepository.GetVoteById(id);
-        }
-
-        public override void AddVote(VoteModel vote)
-        {
-            _voteRepository.AddVote(vote);
-        }
-
-        public override void UpdateVote(VoteModel vote)
-        {
-            _voteRepository.UpdateVote(vote);
-        }
-
-        public override void DeleteVote(int id)
-        {
-            _voteRepository.DeleteVote(id);
-        }
-
-        public override async Task SendVotingReminderPeriodically()
-        {
-            while (true)
-            {
-                DateTime electionDay = new DateTime(2024, 05, 10); // Przykładowa data wyborów
-                TimeSpan timeRemaining = electionDay - DateTime.Today; // Czas pozostały do wyborów
-                System.Diagnostics.Debug.WriteLine(timeRemaining);
-
-                // Aktualizacja liczby dni pozostałych do wyborów w MainViewModel
-                UpdateDaysToElection?.Invoke(this, timeRemaining.Days);
-
-                // Poczekaj jeden dzień
-                await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
-            }
-        }
+                        // Poczekaj jeden dzień
+                        await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
+                    }
+                }*/
     }
 }
