@@ -30,9 +30,19 @@ namespace Data.Repositories
             return votes;
         }
 
-        public IVoteModel GetVotesForCandidate(int id)
+        public List<IVoteModel> GetVotesForCandidate(int id)
         {
-            throw new NotImplementedException();
+            List<IVoteModel> votes = new List<IVoteModel>();
+
+            foreach (VoteModel vote in _votes)
+            {
+                if (vote.Id == id)
+                {
+                    votes.Add(vote);
+                }
+            }
+
+            return votes;
         }
     }
 }

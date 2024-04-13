@@ -15,7 +15,7 @@ namespace Data
     public interface IVoteRepository
     {
         public List<IVoteModel> GetAllVotes();
-        public IVoteModel GetVotesForCandidate(int id);
+        public List<IVoteModel> GetVotesForCandidate(int id);
         public void AddVote(int id, int candidateId);
     }
 
