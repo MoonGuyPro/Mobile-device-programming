@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
 using System.Collections.ObjectModel;
+using ClientData;
 
 namespace Data.Repositories
 {
@@ -12,13 +13,19 @@ namespace Data.Repositories
     {
         private List<CandidateModel> _candidates = new List<CandidateModel>();
 
-        public CandidateRepository()
+        private readonly IConnectionService connectionService;
+
+        public CandidateRepository(IConnectionService connectionService)
         {
             AddCandidate(1, "Candidate 1");
             AddCandidate(2, "Candidate 2");
             AddCandidate(3, "Candidate 3");
             AddCandidate(4, "Candidate 4");
             AddCandidate(5, "Candidate 5");
+
+            //observers = new HashSet<IObserver<InflationChangedEventArgs>>();
+            this.connectionService = connectionService;
+            //this.connectionService.OnMessage += OnMessage;
         }
 
         public void AddCandidate(int id, string name)
@@ -39,5 +46,7 @@ namespace Data.Repositories
         {
             _candidates.RemoveAt(id-1);
         }
+
+       
     }
 }
