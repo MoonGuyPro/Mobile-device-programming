@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApi", "ClientApi\Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerDataTest", "ServerDataTest\ServerDataTest.csproj", "{80C9F7E8-0985-479B-A04F-0663E9521665}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerLogicTest", "ServerLogicTest\ServerLogicTest.csproj", "{DF170CE1-5950-4776-A847-107E3BDDB01E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{80C9F7E8-0985-479B-A04F-0663E9521665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C9F7E8-0985-479B-A04F-0663E9521665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80C9F7E8-0985-479B-A04F-0663E9521665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF170CE1-5950-4776-A847-107E3BDDB01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF170CE1-5950-4776-A847-107E3BDDB01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF170CE1-5950-4776-A847-107E3BDDB01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF170CE1-5950-4776-A847-107E3BDDB01E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{ED8F3122-E590-484A-B624-EE52E4ADF455} = {26B4DC1F-9F2C-4FBC-8CD7-F589CE5DB554}
 		{D65DB969-527C-49D3-ABB1-E0AF5E3AA93A} = {26B4DC1F-9F2C-4FBC-8CD7-F589CE5DB554}
 		{80C9F7E8-0985-479B-A04F-0663E9521665} = {26B4DC1F-9F2C-4FBC-8CD7-F589CE5DB554}
+		{DF170CE1-5950-4776-A847-107E3BDDB01E} = {26B4DC1F-9F2C-4FBC-8CD7-F589CE5DB554}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B673BE9-A4A0-4C28-8A1B-908778827F1C}
