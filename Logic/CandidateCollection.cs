@@ -33,5 +33,10 @@ namespace Logic
             }
             */
         }
+
+        public int GetVotesForCandidate(int id)
+        {
+            return _candidateRepository.GetVotesNumberForCandidate(id);
+        }
     }
 }

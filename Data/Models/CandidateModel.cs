@@ -11,6 +11,8 @@ namespace Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public int VotesNumber { get; set; }
+
         public CandidateModel(int id, string name) 
         {
             Id = id;

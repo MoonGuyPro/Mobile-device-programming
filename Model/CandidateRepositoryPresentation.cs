@@ -24,5 +24,11 @@ namespace Model
                                             .ToList();
         }
 
+        public int GetVotesNumberForCandidate(int id)
+        {
+            int votes = _candidateCollection.GetVotesForCandidate(id);
+            return votes;
+        }
+
     }
 }

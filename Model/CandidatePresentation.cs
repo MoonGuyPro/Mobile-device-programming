@@ -13,11 +13,13 @@ namespace Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int VotesNumber { get; set; }
 
         public CandidatePresentation(ICandidatePerson candidate)
         {
             Id = candidate.Id;
             Name = candidate.Name;
+            VotesNumber = candidate.VotesNumber;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

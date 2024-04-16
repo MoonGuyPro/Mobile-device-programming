@@ -71,6 +71,7 @@ namespace ViewModel
         {
            if (_selectedCandidate != null)
              {
+                _selectedCandidate.VotesNumber++;
                  System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
              }
              else

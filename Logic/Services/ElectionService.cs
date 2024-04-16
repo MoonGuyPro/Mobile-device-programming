@@ -41,7 +41,10 @@ namespace Logic.Services
             }
         }
 
-
-
+        public override int GetVotesForCandidate(int id)
+        {
+            int votes = _candidates.GetVotesForCandidate(id);
+            return votes;
+        }
     }
 }

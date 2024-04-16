@@ -47,6 +47,23 @@ namespace Data.Repositories
             _candidates.RemoveAt(id-1);
         }
 
-       
+        public int GetVotesNumberForCandidate(int id)
+        {
+            foreach(CandidateModel candidate in _candidates)
+            {
+                if(candidate.Id == id)
+                    return candidate.VotesNumber;
+            }
+            return 0;
+        }
+
+        public void AddVote(int id)
+        {
+            foreach (CandidateModel candidate in _candidates)
+            {
+                if (candidate.Id == id)
+                    candidate.VotesNumber++;
+            }
+        }
     }
 }

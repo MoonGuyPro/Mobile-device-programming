@@ -12,10 +12,13 @@ namespace Logic
         public int Id { get; private set; }
         public string Name { get; private set; } = "";
 
+        public int VotesNumber { get; private set; }
+
         public CandidatePerson(ICandidateModel candidate)
         {
             Id = candidate.Id;
             Name = candidate.Name;
+            VotesNumber = candidate.VotesNumber;
         }
     }
 }

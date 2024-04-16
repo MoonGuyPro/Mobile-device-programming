@@ -14,11 +14,13 @@ namespace Logic
     {
         public int Id { get;}
         public string Name { get;}
+        public int VotesNumber { get;}
     }
 
     public interface ICandidateCollection
     {
         public List<ICandidatePerson> GetCandidates();
+        public int GetVotesForCandidate(int id);
     }
 
     public abstract class ElectionServiceAbstract
@@ -37,6 +39,7 @@ namespace Logic
         }
 
         public abstract ICandidateCollection GetCandidates();
+        public abstract int GetVotesForCandidate(int id);
 
         public abstract event EventHandler<int> UpdateDaysToElection;
         public abstract Task SendVotingReminderPeriodically();

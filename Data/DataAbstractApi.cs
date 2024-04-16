@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClientData
 {
+
 	public interface IConnectionService
 	{
 		public event Action<string>? Logger;
