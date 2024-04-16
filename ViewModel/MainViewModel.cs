@@ -14,6 +14,7 @@ namespace ViewModel
         private ObservableCollection<CandidatePresentation> _candidates;
         private CandidatePresentation _selectedCandidate;
         private int _daysToElection;
+        private string connectionString;
         public RelayCommand VoteCommand { get; private set; }
 
         public CandidatePresentation SelectedCandidate
@@ -33,6 +34,19 @@ namespace ViewModel
             }
         }
 
+        public string ConnectionString
+        {
+            get => connectionString;
+            private set
+            {
+                if (connectionString != value)
+                {
+                    connectionString = value;
+                    OnPropertyChanged(nameof(connectionString));
+                }
+            }
+        }
+
 
         public int DaysToElection
         {
@@ -49,17 +63,11 @@ namespace ViewModel
             this.model = new Model.Model(null);
             Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
+
             // Zarejestruj się na zdarzenie UpdateDaysToElection
             model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             Task.Run(() => model.GetService().SendVotingReminderPeriodically());
         }
-
-/*        public MainViewModel(IElectionService electionService)
-        {
-            this.electionService = electionService;
-            LoadCandidates();
-            VoteCommand = new RelayCommand(VoteForCandidate);
-        }*/
 
         private void LoadCandidates()
         {
@@ -72,12 +80,12 @@ namespace ViewModel
            if (_selectedCandidate != null)
              {
                 _selectedCandidate.VotesNumber++;
-                 System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
+                 //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
              }
-             else
+/*             else
              {
                  System.Diagnostics.Debug.WriteLine("No candidate selected.");
-             }
+             }*/
 
         }
 

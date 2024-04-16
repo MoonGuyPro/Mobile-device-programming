@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logic;
+using ClientLogic;
 
 namespace Model
 {
     public class Model
     {
-        private ElectionServiceAbstract electionService;
-
+        private LogicAbstractApi electionService;
         public CandidateRepositoryPresentation candidateRepositoryPresentation { get; private set; }
-
-        public Model(ElectionServiceAbstract? electionServiceAbstract)
+        public ModelConnectionService ModelConnectionService { get; private set; }
+        public Model(LogicAbstractApi? electionServiceAbstract)
         {
-            this.electionService = electionServiceAbstract == null ? ElectionServiceAbstract.Create() : electionServiceAbstract;
-            this.electionService.GetCandidates();
-            this.candidateRepositoryPresentation = new CandidateRepositoryPresentation(this.electionService.GetCandidates());
+            electionService = electionServiceAbstract == null ? LogicAbstractApi.Create() : electionServiceAbstract;
+            electionService.GetCandidates();
+            candidateRepositoryPresentation = new CandidateRepositoryPresentation(electionService.GetCandidates());
+
+            ModelConnectionService = new ModelConnectionService(electionService.GetConnectionService());
         }
 
-        public ElectionServiceAbstract GetService()
+        public LogicAbstractApi GetService()
         {
             return this.electionService;
         }

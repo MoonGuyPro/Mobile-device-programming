@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Models;
-using System.Collections.ObjectModel;
 using ClientData;
+using System.Collections.ObjectModel;
 
-namespace Data.Repositories
+namespace ClientData
 {
     internal class CandidateRepository : ICandidateRepository
     {

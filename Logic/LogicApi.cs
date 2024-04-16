@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Models;
-using Data;
-using Logic;
+using ClientData;
 
-namespace Logic.Services
+namespace ClientLogic
 {
-    internal class ElectionService : ElectionServiceAbstract
+    internal class LogicApi : LogicAbstractApi
     {
         private readonly ICandidateCollection _candidates;
+        private readonly ILogicConnectionService connectionService;
 
-        public ElectionService(CandidateRepositoryAbstract candidateRepositoryAbstract) : base(candidateRepositoryAbstract)
+        public LogicApi(DataAbstractApi dataAbstractApi) : base(dataAbstractApi)
         {
-            _candidates = new CandidateCollection(candidateRepositoryAbstract.GetCandidateRepository());
+            _candidates = new CandidateCollection(dataAbstractApi.GetCandidateRepository());
+            connectionService = new LogicConnectionService(dataAbstractApi.GetConnectionService());
         }
 
         public override ICandidateCollection GetCandidates()
@@ -45,6 +45,11 @@ namespace Logic.Services
         {
             int votes = _candidates.GetVotesForCandidate(id);
             return votes;
+        }
+
+        public override ILogicConnectionService GetConnectionService()
+        {
+            return connectionService;
         }
     }
 }
