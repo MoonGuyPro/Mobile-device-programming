@@ -37,8 +37,6 @@ namespace ClientData
             {
                 UpdateAllResponce responce = serializer.Deserialize<UpdateAllResponce>(message);
                 UpdateAllCandidates(responce);
-                System.Diagnostics.Debug.WriteLine($"cands");
-                System.Diagnostics.Debug.WriteLine($"s : {_candidates[0].Name}");
             }
             else
             {

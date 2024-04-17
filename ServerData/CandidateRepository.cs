@@ -13,11 +13,11 @@ namespace ServerData
 
         public CandidateRepository()
         {
-            AddCandidate(1, "Candidate 11");
-            AddCandidate(2, "Candidate 22");
-            AddCandidate(3, "Candidate 33");
-            AddCandidate(4, "Candidate 44");
-            AddCandidate(5, "Candidate 55");
+            AddCandidate(1, "Candidate 1");
+            AddCandidate(2, "Candidate 2");
+            AddCandidate(3, "Candidate 3");
+            AddCandidate(4, "Candidate 4");
+            AddCandidate(5, "Candidate 5");
 
             //this.connectionService.OnMessage += OnMessage;
         }

@@ -16,7 +16,6 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Name}" Margin="5"/>
-                        <TextBlock Text="{Binding VotesNumber}" Margin="5"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

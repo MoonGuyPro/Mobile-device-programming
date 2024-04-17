@@ -63,11 +63,11 @@ namespace ViewModel
             this.model = new Model.Model(null);
 
             model.ModelConnectionService.Logger += Log;
-            model.ModelConnectionService.OnMessage += OnMessage; 
-            model.candidateRepositoryPresentation.RequestUpdate();
+            model.ModelConnectionService.OnMessage += OnMessage;
+            Task.Run(async () => await RequestWait());
             Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
-
+            Task.Run(async () => await CandidatesWait());
             OnConnectionStateChanged();
 
             // Zarejestruj się na zdarzenie UpdateDaysToElection
@@ -85,25 +85,27 @@ namespace ViewModel
         private void VoteForCandidate(object candidateId)
         {
            if (_selectedCandidate != null)
-             {
-                //model.
+           {
+               //model.candidateRepositoryPresentation.AddVote(_selectedCandidate.Id);
+               Task.Run(async () => await model.VoteForCandidate(_selectedCandidate.Id));
+               //Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+               model.candidateRepositoryPresentation.RequestUpdate();
+               //Task.Run(async () => await CandidatesWait());
+               //Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+           }
 
-                //model.candidateRepositoryPresentation.AddVote(_selectedCandidate.Id);
-                Task.Run(async () => await model.VoteForCandidate(_selectedCandidate.Id));
-                //Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
-                model.candidateRepositoryPresentation.RequestUpdate();
-                Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+        }
 
-                
-                //_selectedCandidate.VotesNumber++;
-                //System.Diagnostics.Debug.WriteLine($"Votes : {_selectedCandidate.VotesNumber}");
-                //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
-            }
-/*             else
-             {
-                 System.Diagnostics.Debug.WriteLine("No candidate selected.");
-             }*/
+        private async Task CandidatesWait()
+        {
+            await Task.Delay(3000);
+            Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+        }
 
+        private async Task RequestWait()
+        {
+            await Task.Delay(1000);
+            model.candidateRepositoryPresentation.RequestUpdate();
         }
 
         private void OnConnectionStateChanged()
