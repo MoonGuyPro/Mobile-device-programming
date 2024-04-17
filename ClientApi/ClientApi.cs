@@ -61,12 +61,13 @@ namespace ClientApi
 		public UpdateAllResponce() : base(StaticHeader) { }
     }
 
-/*	[Serializable]
-	public class VoteForCandidate : ServerCommand
+	[Serializable]
+	public class VoteForCandidateCommand : ServerCommand
     {
 		public static string StaticHeader = "VoteForCandidate";
 
+		public int CandidateId;
 
-
-	}*/
+		public VoteForCandidateCommand(int candidateId) : base(StaticHeader) { CandidateId = candidateId; }
+	}
 }

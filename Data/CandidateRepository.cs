@@ -108,13 +108,15 @@ namespace ClientData
             }
         }
 
-/*        public async Task VoteForCandidate(int id)
+        public async Task VoteForCandidate(int id)
         {
             if (connectionService.IsConnected())
             {
                 Serializer serializer = Serializer.Create();
+                VoteForCandidateCommand voteForCandidateCommand = new VoteForCandidateCommand(id);
+                await connectionService.SendAsync(serializer.Serialize(voteForCandidateCommand));   
 
             }
-        }*/
+        }
     }
 }
