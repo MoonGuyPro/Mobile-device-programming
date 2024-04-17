@@ -93,6 +93,24 @@ namespace ViewModel
         {
             DaysToElection = days;
         }
-        
+
+        public async Task CloseConnection()
+        {
+            if (model.ModelConnectionService.IsConnected())
+            {
+                await model.ModelConnectionService.Disconnect();
+            }
+        }
+
+        private void Log(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private void OnMessage(string message)
+        {
+            Log($"New Message: {message}");
+        }
+
     }
 }
