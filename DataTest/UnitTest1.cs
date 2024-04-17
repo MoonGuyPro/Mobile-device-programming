@@ -1,21 +1,23 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Data;
-
+using ClientData;
+using ClientDataTest;
 namespace DataTest
 {
     [TestClass]
     public class UnitTest1
     {
-        private CandidateRepositoryAbstract PrepareData()
+        static ConnectionServiceMock connectionService = new ConnectionServiceMock();
+        DataAbstractApi data = DataAbstractApi.Create(connectionService);
+        /*private DataAbstractApi PrepareData()
         {
-            CandidateRepositoryAbstract data = CandidateRepositoryAbstract.Create();
+            DataAbstractApi data = DataAbstractApi.Create();
             return data;
-        }
+        }*/
         [TestMethod]
         public void AddCandidate()
         {
-            CandidateRepositoryAbstract data = PrepareData();
+           // DataAbstractApi data = PrepareData();
 
             data.GetCandidateRepository().AddCandidate(10,"Zbysiu");
           
@@ -26,14 +28,14 @@ namespace DataTest
         [TestMethod]
         public void CreateCandidates()
         {
-            CandidateRepositoryAbstract data = PrepareData();
+           // DataAbstractApi data = PrepareData();
             Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 5);
         }
 
         [TestMethod]
         public void DeleteCandidate()
         {
-            CandidateRepositoryAbstract data = PrepareData();
+            //DataAbstractApi data = PrepareData();
 
             data.GetCandidateRepository().RemoveCandidate(1);
             Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 4);
