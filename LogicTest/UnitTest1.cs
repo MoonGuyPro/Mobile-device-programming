@@ -69,6 +69,16 @@ namespace LogicTest
 
             allCandidates.Remove(candidateToRemove);
         }
+
+        public void RequestUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task VoteForCandidate(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class ConnectionServiceMock : IConnectionService
     {

@@ -61,8 +61,10 @@ namespace ViewModel
         public MainViewModel()
         {
             this.model = new Model.Model(null);
+
+            model.ModelConnectionService.Logger += Log;
+            model.ModelConnectionService.OnMessage += OnMessage; 
             model.candidateRepositoryPresentation.RequestUpdate();
-            model.ModelConnectionService.OnMessage += OnMessage;
             Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
 
@@ -72,6 +74,7 @@ namespace ViewModel
             model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             Task.Run(() => model.GetService().SendVotingReminderPeriodically());
         }
+
 
         private void LoadCandidates()
         {
@@ -91,6 +94,7 @@ namespace ViewModel
                 model.candidateRepositoryPresentation.RequestUpdate();
                 Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
 
+                
                 //_selectedCandidate.VotesNumber++;
                 //System.Diagnostics.Debug.WriteLine($"Votes : {_selectedCandidate.VotesNumber}");
                 //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");

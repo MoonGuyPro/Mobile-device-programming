@@ -37,19 +37,22 @@ namespace ClientData
             {
                 UpdateAllResponce responce = serializer.Deserialize<UpdateAllResponce>(message);
                 UpdateAllCandidates(responce);
-
+                System.Diagnostics.Debug.WriteLine($"cands");
+                System.Diagnostics.Debug.WriteLine($"s : {_candidates[0].Name}");
             }
             else
             {
                 Task.Run(() => RequestCandidates());
             }
+
         }
 
         private void UpdateAllCandidates(UpdateAllResponce responce)
         {
-            if (responce.candidates != null)
+            if (responce.candidates == null)
                 return;
 
+            _candidates.Clear();
             foreach (CandidateDTO candidate in responce.candidates)
             {
                 _candidates.Add(candidate.ToCandidate());
