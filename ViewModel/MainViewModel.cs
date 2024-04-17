@@ -83,11 +83,12 @@ namespace ViewModel
              {
                 //model.
                 model.candidateRepositoryPresentation.AddVote(_selectedCandidate.Id);
-                Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+                //Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+                model.candidateRepositoryPresentation.RequestUpdate();
                 //_selectedCandidate.VotesNumber++;
                 //System.Diagnostics.Debug.WriteLine($"Votes : {_selectedCandidate.VotesNumber}");
-                 //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
-             }
+                //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
+            }
 /*             else
              {
                  System.Diagnostics.Debug.WriteLine("No candidate selected.");
@@ -106,7 +107,7 @@ namespace ViewModel
             }
             else
             {
-                //model.candidateRepositoryPresentation.RequestUpdate();
+                model.candidateRepositoryPresentation.RequestUpdate();
             }
         }
 

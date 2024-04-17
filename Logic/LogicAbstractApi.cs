@@ -18,7 +18,7 @@ namespace ClientLogic
     {
         public List<ICandidatePerson> GetCandidates();
         public int GetVotesForCandidate(int id);
-
+        public void RequestUpdate();
         public void AddVote(int id);
     }
 

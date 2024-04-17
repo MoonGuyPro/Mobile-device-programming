@@ -33,5 +33,10 @@ namespace Model
         {
             _candidateCollection.AddVote(id);
         }
+
+        public void RequestUpdate()
+        {
+            _candidateCollection.RequestUpdate();
+        }
     }
 }

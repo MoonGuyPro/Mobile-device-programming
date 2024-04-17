@@ -18,6 +18,7 @@ namespace ClientData
 	{
 		public void AddCandidate(int id, string name);
 		public void RemoveCandidate(int id);
+		public void RequestUpdate();
 		public List<ICandidateModel> GetAllCandidates();
 		public int GetVotesNumberForCandidate(int id);
 		public void AddVote(int id);

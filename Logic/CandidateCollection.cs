@@ -33,7 +33,10 @@ namespace ClientLogic
             }
             */
         }
-
+        public void RequestUpdate()
+        {
+            _candidateRepository.RequestUpdate();
+        }
 
         public int GetVotesForCandidate(int id)
         {
