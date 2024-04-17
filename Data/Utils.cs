@@ -19,7 +19,7 @@ namespace ClientData
 			return Enum.GetName(typeof(CandidateModel), typeAsString) ?? throw new InvalidOperationException();
 		}
 
-		public static ICandidateModel ToItem(this CandidateDTO candidateDTO)
+		public static ICandidateModel ToCandidate(this CandidateDTO candidateDTO)
 		{
 			return new CandidateModel(
 				candidateDTO.Id,

@@ -19,7 +19,6 @@ namespace ServerData
             AddCandidate(4, "Candidate 4");
             AddCandidate(5, "Candidate 6");
 
-            //observers = new HashSet<IObserver<InflationChangedEventArgs>>();
             //this.connectionService.OnMessage += OnMessage;
         }
 
@@ -60,5 +59,7 @@ namespace ServerData
                     candidate.VotesNumber++;
             }
         }
+
+
     }
 }

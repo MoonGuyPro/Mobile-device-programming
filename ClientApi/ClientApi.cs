@@ -50,4 +50,23 @@ namespace ClientApi
 			Header = header;
 		}
 	}
+
+	[Serializable]
+	public class UpdateAllResponce : ServerResponse
+    {
+		public static readonly string StaticHeader = "UpdateAllCandidates";
+
+		public CandidateDTO[]? candidates;
+
+		public UpdateAllResponce() : base(StaticHeader) { }
+    }
+
+/*	[Serializable]
+	public class VoteForCandidate : ServerCommand
+    {
+		public static string StaticHeader = "VoteForCandidate";
+
+
+
+	}*/
 }

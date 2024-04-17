@@ -91,6 +91,21 @@ namespace ViewModel
 
         }
 
+        private void OnConnectionStateChanged()
+        {
+            bool actualState = model.ModelConnectionService.IsConnected();
+            ConnectionString = actualState ? "Connected" : "Disconnected";
+
+            if (!actualState)
+            {
+                Task.Run(() => model.ModelConnectionService.Connect(new Uri(@"ws://localhost:21370")));
+            }
+            else
+            {
+                //model.candidateRepositoryPresentation.RequestUpdate();
+            }
+        }
+
         private void OnUpdateDaysToElection(object sender, int days)
         {
             DaysToElection = days;

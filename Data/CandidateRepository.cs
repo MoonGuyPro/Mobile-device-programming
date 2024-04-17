@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ClientData;
 using System.Collections.ObjectModel;
+using ClientApi;
 
 namespace ClientData
 {
     internal class CandidateRepository : ICandidateRepository
     {
-        private List<CandidateModel> _candidates = new List<CandidateModel>();
+        private List<ICandidateModel> _candidates = new List<ICandidateModel>();
 
         private readonly IConnectionService connectionService;
+
+        public event Action? CandidatesUpdate;
 
         public CandidateRepository(IConnectionService connectionService)
         {
@@ -22,9 +25,35 @@ namespace ClientData
             AddCandidate(4, "Candidate 4");
             AddCandidate(5, "Candidate 5");
 
-            //observers = new HashSet<IObserver<InflationChangedEventArgs>>();
+
             this.connectionService = connectionService;
-            //this.connectionService.OnMessage += OnMessage;
+            this.connectionService.OnMessage += OnMessage;
+        }
+
+        private void OnMessage(string message)
+        {
+            Serializer serializer = Serializer.Create();
+            if (serializer.GetResponseHeader(message) == UpdateAllResponce.StaticHeader)
+            {
+                UpdateAllResponce responce = serializer.Deserialize<UpdateAllResponce>(message);
+                UpdateAllCandidates(responce);
+
+            }
+            else
+            {
+                Task.Run(() => RequestCandidates());
+            }
+        }
+
+        private void UpdateAllCandidates(UpdateAllResponce responce)
+        {
+            if (responce.candidates != null)
+                return;
+
+            foreach (CandidateDTO candidate in responce.candidates)
+            {
+                _candidates.Add(candidate.ToCandidate());
+            }
         }
 
         public void AddCandidate(int id, string name)
@@ -64,5 +93,28 @@ namespace ClientData
                     candidate.VotesNumber++;
             }
         }
+
+        public async Task RequestCandidates()
+        {
+            Serializer serializer = Serializer.Create();
+            await connectionService.SendAsync(serializer.Serialize(new GetCandidatesCommand()));
+        }
+
+        public void RequestUpdate()
+        {
+            if (connectionService.IsConnected())
+            {
+                Task task = Task.Run(async () => await RequestCandidates());
+            }
+        }
+
+/*        public async Task VoteForCandidate(int id)
+        {
+            if (connectionService.IsConnected())
+            {
+                Serializer serializer = Serializer.Create();
+
+            }
+        }*/
     }
 }
