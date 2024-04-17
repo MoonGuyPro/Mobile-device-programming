@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ServerLogic;
-using ServerData;
+using ClientData;
 
-namespace ServerLogic
+namespace ClientLogic
 {
-    internal class ElectionService : ElectionServiceAbstract
+    internal class LogicApi : LogicAbstractApi
     {
         private readonly ICandidateCollection _candidates;
 
-        public ElectionService(CandidateRepositoryAbstract candidateRepositoryAbstract) : base(candidateRepositoryAbstract)
+        public LogicApi(DataAbstractApi dataAbstractApi) : base(dataAbstractApi)
         {
-            _candidates = new CandidateCollection(candidateRepositoryAbstract.GetCandidateRepository());
+            _candidates = new CandidateCollection(dataAbstractApi.GetCandidateRepository());
+            
         }
 
         public override ICandidateCollection GetCandidates()
@@ -40,7 +40,10 @@ namespace ServerLogic
             }
         }
 
-
-
+        public override int GetVotesForCandidate(int id)
+        {
+            int votes = _candidates.GetVotesForCandidate(id);
+            return votes;
+        }
     }
 }

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ServerLogic;
-using ServerData;
+using ClientData;
 
-namespace ServerLogic
+namespace ClientLogic
 {
     internal class CandidateCollection : ICandidateCollection
     {
@@ -24,15 +23,20 @@ namespace ServerLogic
                 .Cast<ICandidatePerson>().ToList();
 
 
-            // throw new NotImplementedException();
+           // throw new NotImplementedException();
             //List<ICandidatePerson> candidates;
-            /* foreach(ICandidateModel candidate in _candidateRepository.GetAllCandidates())
-             {
-                 ICandidatePerson(candidate)
+           /* foreach(ICandidateModel candidate in _candidateRepository.GetAllCandidates())
+            {
+                ICandidatePerson(candidate)
 
-                 candidates.Add(CandidatePerson(candidate));
-             }
-             */
+                candidates.Add(CandidatePerson(candidate));
+            }
+            */
+        }
+
+        public int GetVotesForCandidate(int id)
+        {
+            return _candidateRepository.GetVotesNumberForCandidate(id);
         }
     }
 }

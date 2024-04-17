@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClientApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace ClientData
 		public event Action? OnError;
 		public event Action? OnDisconnect;
 		
-		//internal WebSocketConnection? WebSocketConnection { get; private set; }
+		internal WebSocketConnection? WebSocketConnection { get; private set; }
 		public async Task Connect(Uri peerUri)
 		{
 			/*try
