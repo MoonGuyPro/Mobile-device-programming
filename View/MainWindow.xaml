@@ -11,8 +11,16 @@
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <ListBox x:Name="CandidatesList" ItemsSource="{Binding Candidates}" DisplayMemberPath="Name"
-         SelectedItem="{Binding SelectedCandidate, Mode=TwoWay}"/>
+        <ListBox x:Name="CandidatesList" ItemsSource="{Binding Candidates}" SelectedItem="{Binding SelectedCandidate, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Margin="5"/>
+                        <TextBlock Text="{Binding VotesNumber}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Button Content="Vote" Command="{Binding VoteCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="57" Width="93"/>
         <TextBlock Text="{Binding DaysToElection}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="24" Margin="0,387,0,0" Height="22"/>
     </Grid>

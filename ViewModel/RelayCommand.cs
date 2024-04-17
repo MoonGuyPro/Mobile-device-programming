@@ -13,11 +13,17 @@ namespace ViewModel
 
         private readonly Action<object> execute;
         private readonly Func<object, bool> canExecute;
+        private Action voteForCandidate;
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
+        }
+
+        public RelayCommand(Action voteForCandidate)
+        {
+            this.voteForCandidate = voteForCandidate;
         }
 
         public bool CanExecute(object parameter)

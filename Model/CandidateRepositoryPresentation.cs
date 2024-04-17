@@ -29,6 +29,9 @@ namespace Model
             int votes = _candidateCollection.GetVotesForCandidate(id);
             return votes;
         }
-
+        public void AddVote(int id)
+        {
+            _candidateCollection.AddVote(id);
+        }
     }
 }

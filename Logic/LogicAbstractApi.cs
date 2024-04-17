@@ -18,6 +18,8 @@ namespace ClientLogic
     {
         public List<ICandidatePerson> GetCandidates();
         public int GetVotesForCandidate(int id);
+
+        public void AddVote(int id);
     }
 
     public interface ILogicConnectionService

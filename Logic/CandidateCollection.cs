@@ -34,9 +34,15 @@ namespace ClientLogic
             */
         }
 
+
         public int GetVotesForCandidate(int id)
         {
             return _candidateRepository.GetVotesNumberForCandidate(id);
+        }
+
+        public void AddVote(int id)
+        {
+            _candidateRepository.AddVote(id);
         }
     }
 }

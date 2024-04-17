@@ -81,7 +81,11 @@ namespace ViewModel
         {
            if (_selectedCandidate != null)
              {
-                _selectedCandidate.VotesNumber++;
+                //model.
+                model.candidateRepositoryPresentation.AddVote(_selectedCandidate.Id);
+                Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+                //_selectedCandidate.VotesNumber++;
+                //System.Diagnostics.Debug.WriteLine($"Votes : {_selectedCandidate.VotesNumber}");
                  //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {_selectedCandidate.Id}");
              }
 /*             else
@@ -109,20 +113,6 @@ namespace ViewModel
         private void OnUpdateDaysToElection(object sender, int days)
         {
             DaysToElection = days;
-        }
-        private void OnConnectionStateChanged()
-        {
-            bool actualState = model.ModelConnectionService.IsConnected();
-            ConnectionString = actualState ? "Connected" : "Disconnected";
-
-            if (!actualState)
-            {
-                Task.Run(() => model.ModelConnectionService.Connect(new Uri(@"ws://localhost:21370")));
-            }
-            else
-            {
-                //model.WarehousePresentation.RequestUpdate();
-            }
         }
         public async Task CloseConnection()
         {
