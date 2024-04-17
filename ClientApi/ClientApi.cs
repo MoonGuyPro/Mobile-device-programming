@@ -16,7 +16,7 @@ namespace ClientApi
 	[Serializable]
 	public class GetCandidatesCommand : ServerCommand
 	{
-		public static string StaticHeader = "GetItems";
+		public static string StaticHeader = "GetCandidates";
 
 		public GetCandidatesCommand()
 		: base(StaticHeader)

@@ -48,12 +48,12 @@ namespace ServerPresentation
 			Console.WriteLine($"New message: {message}");
 
 			Serializer serializer = Serializer.Create();
-			/*if (serializer.GetCommandHeader(message) == GetItemsCommand.StaticHeader)
+			if (serializer.GetCommandHeader(message) == GetCandidatesCommand.StaticHeader)
 			{
-				GetItemsCommand getItemsCommand = serializer.Deserialize<GetItemsCommand>(message);
-				Task task = Task.Run(async () => await SendItems());
+				GetCandidatesCommand getCandidatesCommand = serializer.Deserialize<GetCandidatesCommand>(message);
+				Task task = Task.Run(async () => await SendCandidates());
 			}
-			else if (serializer.GetCommandHeader(message) == SellItemCommand.StaticHeader)
+/*			else if (serializer.GetCommandHeader(message) == SellItemCommand.StaticHeader)
 			{
 				SellItemCommand sellItemCommand = serializer.Deserialize<SellItemCommand>(message);
 
@@ -75,6 +75,24 @@ namespace ServerPresentation
 				await webSocketConnection.SendAsync(transactionMessage);
 			}*/
 		}
+
+		private async Task SendCandidates()
+        {
+			if (webSocketConnection == null)
+				return;
+
+			Console.WriteLine("Candidates sent");
+			
+			UpdateAllResponce serverResponce = new UpdateAllResponce();
+			List<ICandidatePerson> candidates = logicAbstractApi.GetCandidates().GetCandidates();
+			serverResponce.candidates = candidates.Select(x => x.ToDTO()).ToArray();
+
+			Serializer serializer = Serializer.Create();
+			string responceJson = serializer.Serialize(serverResponce);
+			Console.WriteLine(responceJson);
+
+			await webSocketConnection.SendAsync(responceJson);
+        }
 
 		private void OnError()
 		{
