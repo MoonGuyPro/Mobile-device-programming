@@ -54,5 +54,9 @@ namespace ClientLogic
         {
             _candidateRepository.RequestUpdate();
         }
+        public int getDays()
+        {
+            return _candidateRepository.getDays();
+        }
     }
 }

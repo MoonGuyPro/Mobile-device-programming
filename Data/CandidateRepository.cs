@@ -17,7 +17,7 @@ namespace ClientData
 
         public event Action? CandidatesUpdate;
 
-        private int daysToElection;
+        public int daysToElection = 22;
 
         public CandidateRepository(IConnectionService connectionService)
         {
@@ -57,7 +57,6 @@ namespace ClientData
                 return;
 
             daysToElection = responce.daysToElection;
-
         }
 
         private void UpdateAllCandidates(UpdateAllResponce responce)
@@ -110,6 +109,10 @@ namespace ClientData
             }
         }
 
+        public int getDays()
+        {
+            return daysToElection;
+        }
         public async Task RequestCandidates()
         {
             Serializer serializer = Serializer.Create();

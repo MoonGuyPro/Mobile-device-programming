@@ -54,6 +54,11 @@ namespace LogicTest
             return allCandidates;
         }
 
+        public int getDays()
+        {
+            throw new NotImplementedException();
+        }
+
         public int GetVotesNumberForCandidate(int id)
         {
             throw new NotImplementedException();

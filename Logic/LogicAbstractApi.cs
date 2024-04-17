@@ -21,6 +21,8 @@ namespace ClientLogic
         public Task VoteForCandidate(int id);   
         public void RequestUpdate();
         public void AddVote(int id);
+
+        public int getDays();
     }
 
     public interface ILogicConnectionService

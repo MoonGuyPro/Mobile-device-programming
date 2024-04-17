@@ -23,6 +23,8 @@ namespace ClientData
 		public List<ICandidateModel> GetAllCandidates();
 		public int GetVotesNumberForCandidate(int id);
 		public void AddVote(int id);
+
+		public int getDays();
 	}
 
 	public interface IConnectionService

@@ -73,6 +73,8 @@ namespace ViewModel
             // Zarejestruj się na zdarzenie UpdateDaysToElection
             //model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             //Task.Run(() => model.GetService().SendVotingReminderPeriodically());
+            Task.Run(async () => await CheckChangesLoop());
+
         }
 
 
@@ -106,6 +108,15 @@ namespace ViewModel
         {
             await Task.Delay(1000);
             model.candidateRepositoryPresentation.RequestUpdate();
+        }
+
+        private async Task CheckChangesLoop()
+        {
+            while(true)
+            {
+                DaysToElection = model.candidateRepositoryPresentation.getDays();
+                await Task.Delay(10000);
+            }
         }
 
         private void OnConnectionStateChanged()

@@ -38,5 +38,10 @@ namespace Model
         {
             _candidateCollection.RequestUpdate();
         }
+
+        public int getDays()
+        {
+             return  _candidateCollection.getDays();
+        }
     }
 }
