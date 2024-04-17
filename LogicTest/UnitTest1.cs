@@ -1,22 +1,11 @@
-/*using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using Logic.Services;
-using Data;
-using Logic;
+using ClientLogic;
+using ClientData;
 
 namespace LogicTest
 {
-    public class CandidateRepositoryMock : CandidateRepositoryAbstract
-    {
-        private readonly CandidateRepoMock repoMock = new CandidateRepoMock();
-
-        public override ICandidateRepository GetCandidateRepository()
-        {
-            return repoMock;
-        }
-    }
-
     public class CandidateMock : ICandidateModel
     {
         public CandidateMock(int id, string name)
@@ -25,7 +14,8 @@ namespace LogicTest
             Name = name;
         }
         public int Id { get; set; }
-        public string Name { get; set; } = "";   
+        public string Name { get; set; } = "";
+        public int VotesNumber { get; set; }
     }
 
 
@@ -54,9 +44,19 @@ namespace LogicTest
             allCandidates.Add(new CandidateMock(id, name));
         }
 
+        public void AddVote(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<ICandidateModel> GetAllCandidates()
         {
             return allCandidates;
+        }
+
+        public int GetVotesNumberForCandidate(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveCandidate(int id)
@@ -70,33 +70,79 @@ namespace LogicTest
             allCandidates.Remove(candidateToRemove);
         }
     }
+    public class ConnectionServiceMock : IConnectionService
+    {
+        public event Action<string>? Logger;
+        public event Action? OnConnectionStateChanged;
+        public event Action<string>? OnMessage;
+        public event Action? OnError;
+        public event Action? OnDisconnect;
+
+        public Task Connect(Uri peerUri)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Disconnect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SendAsync(string message)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class DataApiMock : DataAbstractApi
+    {
+        private readonly CandidateRepoMock candidatesMock = new CandidateRepoMock();
+        private readonly ConnectionServiceMock connectionServiceMock = new ConnectionServiceMock();
+
+        public override ICandidateRepository GetCandidateRepository()
+        {
+            return candidatesMock;
+        }
+
+        public override IConnectionService GetConnectionService()
+        {
+            return connectionServiceMock;
+        }
+
+    }
+
 
     [TestClass]
     public class UnitTest1
     {
-        private ElectionServiceAbstract ESAbstract = ElectionServiceAbstract.Create(new CandidateRepositoryMock());
-
+       // private ElectionServiceAbstract ESAbstract = ElectionServiceAbstract.Create(new CandidateRepositoryMock());
+        private LogicAbstractApi logicApi = LogicAbstractApi.Create(new DataApiMock());
         [TestMethod]
         public void CheckCandidate()
         {
             //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {ESAbstract.GetCandidates().GetCandidates().Count}");
             
-            Assert.IsTrue(ESAbstract.GetCandidates().GetCandidates().Count == 3);
-            Assert.IsTrue(ESAbstract.GetCandidates().GetCandidates().First().Id == 1);
-            Assert.IsTrue(ESAbstract.GetCandidates().GetCandidates().First().Name == "Candidate 1");
-            Assert.IsTrue(ESAbstract.GetCandidates().GetCandidates().Last().Id == 3);
+            Assert.IsTrue(logicApi.GetCandidates().GetCandidates().Count == 3);
+            Assert.IsTrue(logicApi.GetCandidates().GetCandidates().First().Id == 1);
+            Assert.IsTrue(logicApi.GetCandidates().GetCandidates().First().Name == "Candidate 1");
+            Assert.IsTrue(logicApi.GetCandidates().GetCandidates().Last().Id == 3);
             //ESAbstract.GetCandidates().GetCandidates();
         }
     }
-}
-    *//*
+
+    
     // Mock Data Storage
     public class MockDataStorage
     {
         public List<CandidateModel> Candidates { get; set; } = new List<CandidateModel>();
-        public List<VoteModel> Votes { get; set; } = new List<VoteModel>();
+        //public List<VoteModel> Votes { get; set; } = new List<VoteModel>();
     }
-
+}
+/*
     // Mock Repositories
     public class MockCandidateRepository : CandidateRepositoryAbstract
     {
@@ -337,5 +383,4 @@ namespace LogicTest
             // Assert
             Assert.IsFalse(result.Any(v => v.Id == 1));
         }
-    }
-}*/
+    }*/

@@ -2,7 +2,7 @@ using ServerData;
 using ServerLogic;
 namespace ServerLogicTest
 {
-    public class CandidateRepositoryMock : CandidateRepositoryAbstract
+    public class CandidateRepositoryMock : DataAbstractApi
     {
         private readonly CandidateRepoMock repoMock = new CandidateRepoMock();
 
@@ -21,7 +21,8 @@ namespace ServerLogicTest
         }
         public int Id { get; set; }
         public string Name { get; set; } = "";
-    }
+        public int VotesNumber { get; set; }
+        }
 
 
     public class CandidateRepoMock : ICandidateRepository
@@ -49,9 +50,19 @@ namespace ServerLogicTest
             allCandidates.Add(new CandidateMock(id, name));
         }
 
+        public void AddVote(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<ICandidateModel> GetAllCandidates()
         {
             return allCandidates;
+        }
+
+        public int GetVotesNumberForCandidate(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveCandidate(int id)
@@ -69,7 +80,7 @@ namespace ServerLogicTest
     [TestClass]
     public class UnitTest1
     {
-        private ElectionServiceAbstract ESAbstract = ElectionServiceAbstract.Create(new CandidateRepositoryMock());
+        private LogicAbstractApi ESAbstract = LogicAbstractApi.Create(new CandidateRepositoryMock());
 
         [TestMethod]
         public void CheckCandidate()
