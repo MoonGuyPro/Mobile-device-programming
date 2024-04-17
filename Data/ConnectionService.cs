@@ -3,6 +3,7 @@ using ServerPresentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace ClientData
 		internal WebSocketConnection? WebSocketConnection { get; private set; }
 		public async Task Connect(Uri peerUri)
 		{
-			/*try
+			try
 			{
 				Logger?.Invoke($"Connecting to {peerUri}");
 				WebSocketConnection = await WebSocketClient.Connect(peerUri, Logger);
@@ -32,31 +33,30 @@ namespace ClientData
 			{
 				Logger?.Invoke($"WebSocked exception: {exception.Message}");
 				OnError?.Invoke();
-			}*/
+			}
 		}
 
 
 
 		public async Task Disconnect()
 		{
-			/*if (WebSocketConnection != null)
+			if (WebSocketConnection != null)
 			{
 				await WebSocketConnection.DisconnectAsync();
-			}*/
+			}
 		}
 
 		public bool IsConnected()
 		{
-			//return WebSocketConnection != null;
-			return true;
+			return WebSocketConnection != null;
 		}
 
 		public async Task SendAsync(string message)
 		{
-			/*if (WebSocketConnection != null)
+			if (WebSocketConnection != null)
 			{
 				await WebSocketConnection.SendAsync(message);
-			}*/
+			}
 		}
 	}
 }
