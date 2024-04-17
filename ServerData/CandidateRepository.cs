@@ -17,7 +17,7 @@ namespace ServerData
             AddCandidate(2, "Candidate 2");
             AddCandidate(3, "Candidate 3");
             AddCandidate(4, "Candidate 4");
-            AddCandidate(5, "Candidate 5");
+            AddCandidate(5, "Candidate 6");
 
             //observers = new HashSet<IObserver<InflationChangedEventArgs>>();
             //this.connectionService.OnMessage += OnMessage;

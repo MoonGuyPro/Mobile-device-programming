@@ -12,16 +12,31 @@ namespace ClientApi
 			Header = header;
 		}
 	}
+
+	[Serializable]
+	public class GetCandidatesCommand : ServerCommand
+	{
+		public static string StaticHeader = "GetItems";
+
+		public GetCandidatesCommand()
+		: base(StaticHeader)
+		{
+
+		}
+	}
+
 	[Serializable]
 	public struct CandidateDTO
 	{
 		public int Id;
 		public string Name;
+		public int Votes;
 
-		public CandidateDTO(int id, string name)
+		public CandidateDTO(int id, string name, int votes)
 		{
 			Id = id;
 			Name = name;
+			Votes = votes;
 		}
 	}
 

@@ -64,6 +64,8 @@ namespace ViewModel
             Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
 
+            OnConnectionStateChanged();
+
             // Zarejestruj się na zdarzenie UpdateDaysToElection
             model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             Task.Run(() => model.GetService().SendVotingReminderPeriodically());
@@ -93,7 +95,20 @@ namespace ViewModel
         {
             DaysToElection = days;
         }
+        private void OnConnectionStateChanged()
+        {
+            bool actualState = model.ModelConnectionService.IsConnected();
+            ConnectionString = actualState ? "Connected" : "Disconnected";
 
+            if (!actualState)
+            {
+                Task.Run(() => model.ModelConnectionService.Connect(new Uri(@"ws://localhost:21370")));
+            }
+            else
+            {
+                //model.WarehousePresentation.RequestUpdate();
+            }
+        }
         public async Task CloseConnection()
         {
             if (model.ModelConnectionService.IsConnected())
