@@ -16,6 +16,11 @@ namespace ServerLogic
             this._candidateRepository = candidateRepository;
         }
 
+        public void AddVote(int id)
+        {
+            _candidateRepository.AddVote(id);
+        }
+
         public List<ICandidatePerson> GetCandidates()
         {
             return _candidateRepository.GetAllCandidates()
@@ -27,5 +32,6 @@ namespace ServerLogic
         {
             return _candidateRepository.GetVotesNumberForCandidate(id);
         }
+
     }
 }

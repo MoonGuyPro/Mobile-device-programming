@@ -70,4 +70,14 @@ namespace ClientApi
 
 		public VoteForCandidateCommand(int candidateId) : base(StaticHeader) { CandidateId = candidateId; }
 	}
+
+	[Serializable]
+	public class VotingResponce : ServerResponse
+    {
+		public static readonly string StaticHeader = "VotingResponce";
+
+		public int id;
+
+		public VotingResponce() : base(StaticHeader) { }
+    }
 }

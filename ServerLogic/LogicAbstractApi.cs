@@ -18,6 +18,8 @@ namespace ServerLogic
     {
         public List<ICandidatePerson> GetCandidates();
         public int GetVotesForCandidate(int id);
+
+        public void AddVote(int id);   
     }
 
     public abstract class LogicAbstractApi
@@ -40,5 +42,7 @@ namespace ServerLogic
 
         public abstract event EventHandler<int> UpdateDaysToElection;
         public abstract Task SendVotingReminderPeriodically();
+
+        
     }
 }

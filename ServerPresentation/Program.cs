@@ -53,27 +53,20 @@ namespace ServerPresentation
 				GetCandidatesCommand getCandidatesCommand = serializer.Deserialize<GetCandidatesCommand>(message);
 				Task task = Task.Run(async () => await SendCandidates());
 			}
-/*			else if (serializer.GetCommandHeader(message) == SellItemCommand.StaticHeader)
+			else if (serializer.GetCommandHeader(message) == VoteForCandidateCommand.StaticHeader)
 			{
-				SellItemCommand sellItemCommand = serializer.Deserialize<SellItemCommand>(message);
+				VoteForCandidateCommand votesForCandidateCommand = serializer.Deserialize<VoteForCandidateCommand>(message);
 
-				TransactionResponse transactionResponse = new TransactionResponse();
-				transactionResponse.TransactionId = sellItemCommand.TransactionID;
-				try
-				{
-					logicAbstractApi.GetShop().SellItem(sellItemCommand.ItemID);
-					transactionResponse.Succeeded = true;
-				}
-				catch (Exception exception)
-				{
-					Console.WriteLine($"Exception \"{exception.Message}\" caught during selling item");
-					transactionResponse.Succeeded = false;
-				}
+				//VotingResponce votingResponce = new VotingResponce();
+				//votingResponce.id = votesForCandidateCommand.CandidateId;
 
-				string transactionMessage = serializer.Serialize(transactionResponse);
-				Console.WriteLine($"Send: {transactionMessage}");
-				await webSocketConnection.SendAsync(transactionMessage);
-			}*/
+				//logicAbstractApi.GetCandidates().GetVotesForCandidate(votesForCandidateCommand.CandidateId);
+				logicAbstractApi.GetCandidates().AddVote(votesForCandidateCommand.CandidateId);
+
+				//string votingMessage = serializer.Serialize(votingResponce);
+				//Console.WriteLine($"Send: {votingMessage}");
+				//await webSocketConnection.SendAsync(votingMessage);
+			}
 		}
 
 		private async Task SendCandidates()

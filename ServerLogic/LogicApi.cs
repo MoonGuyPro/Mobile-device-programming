@@ -45,5 +45,6 @@ namespace ServerLogic
             int votes = _candidates.GetVotesForCandidate(id);
             return votes;
         }
+
     }
 }
