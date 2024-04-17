@@ -82,7 +82,8 @@ namespace ViewModel
            if (_selectedCandidate != null)
              {
                 //model.
-                model.candidateRepositoryPresentation.AddVote(_selectedCandidate.Id);
+                //model.candidateRepositoryPresentation.AddVote(_selectedCandidate.Id);
+                Task.Run(async () => await model.VoteForCandidate(_selectedCandidate.Id));
                 //Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
                 model.candidateRepositoryPresentation.RequestUpdate();
                 //_selectedCandidate.VotesNumber++;

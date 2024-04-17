@@ -16,6 +16,7 @@ namespace ClientData
 
 	public interface ICandidateRepository
 	{
+		public Task VoteForCandidate(int id);
 		public void AddCandidate(int id, string name);
 		public void RemoveCandidate(int id);
 		public void RequestUpdate();

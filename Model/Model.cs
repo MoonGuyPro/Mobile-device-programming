@@ -21,6 +21,11 @@ namespace Model
             ModelConnectionService = new ModelConnectionService(electionService.GetConnectionService());
         }
 
+        public async Task VoteForCandidate(int id)
+        {
+            await electionService.GetCandidates().VoteForCandidate(id);
+        }
+        
         public LogicAbstractApi GetService()
         {
             return this.electionService;

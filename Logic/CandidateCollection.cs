@@ -33,10 +33,7 @@ namespace ClientLogic
             }
             */
         }
-        public void RequestUpdate()
-        {
-            _candidateRepository.RequestUpdate();
-        }
+
 
         public int GetVotesForCandidate(int id)
         {
@@ -46,6 +43,16 @@ namespace ClientLogic
         public void AddVote(int id)
         {
             _candidateRepository.AddVote(id);
+        }
+
+        public async Task VoteForCandidate(int id)
+        {
+            await _candidateRepository.VoteForCandidate(id);
+        }
+
+        public void RequestUpdate()
+        {
+            _candidateRepository.RequestUpdate();
         }
     }
 }
