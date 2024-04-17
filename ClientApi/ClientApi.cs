@@ -80,4 +80,17 @@ namespace ClientApi
 
 		public VotingResponce() : base(StaticHeader) { }
     }
+
+	public class VotingReminder : ServerResponse
+    {
+		public static readonly string StaticHeader = "VoringReminder";
+
+		public int daysToElection;
+
+		public VotingReminder() : base(StaticHeader) { }
+
+
+    }
+
+
 }

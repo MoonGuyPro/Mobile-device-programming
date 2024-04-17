@@ -16,6 +16,9 @@ namespace ClientData
         private readonly IConnectionService connectionService;
 
         public event Action? CandidatesUpdate;
+        public event EventHandler<int> UpdateDaysToElection;
+
+        private int daysToElection;
 
         public CandidateRepository(IConnectionService connectionService)
         {
@@ -37,11 +40,23 @@ namespace ClientData
             {
                 UpdateAllResponce responce = serializer.Deserialize<UpdateAllResponce>(message);
                 UpdateAllCandidates(responce);
+            } else if (serializer.GetResponseHeader(message) == VotingReminder.StaticHeader)
+            {
+                VotingReminder responce = serializer.Deserialize<VotingReminder>(message);
+
             }
-            else
+            else 
             {
                 Task.Run(() => RequestCandidates());
             }
+
+        }
+
+        private void UpdateDaysToElection(VotingReminder responce)
+        {
+            if (responce.daysToElection == null)
+                return;
+
 
         }
 
@@ -119,5 +134,6 @@ namespace ClientData
 
             }
         }
+
     }
 }
