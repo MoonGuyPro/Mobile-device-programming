@@ -71,8 +71,8 @@ namespace ViewModel
             OnConnectionStateChanged();
 
             // Zarejestruj się na zdarzenie UpdateDaysToElection
-            model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
-            Task.Run(() => model.GetService().SendVotingReminderPeriodically());
+            //model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
+            //Task.Run(() => model.GetService().SendVotingReminderPeriodically());
         }
 
 
