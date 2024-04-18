@@ -20,7 +20,7 @@ namespace ClientData
         private object candidatesLock = new object();
         private object voteLock = new object();
 
-        public event Action? CandidatesUpdate;
+
         public event Action? CandidatesUpdated;
 
         public int daysToElection = 220;
@@ -99,7 +99,7 @@ namespace ClientData
                     _candidates.Add(candidate.ToCandidate());
                 }
             }
-            CandidatesUpdate?.Invoke();
+            CandidatesUpdated?.Invoke();
         }
 
         public void AddCandidate(int id, string name)

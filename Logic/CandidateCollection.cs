@@ -7,14 +7,19 @@ using ClientData;
 
 namespace ClientLogic
 {
-    internal class CandidateCollection : ICandidateCollection
+    internal class CandidateCollection : ICandidateCollection, IObserver<DaysToElectionChangedEventArgs>
     {
         private readonly ICandidateRepository _candidateRepository;
         public event Action? CandidatesUpdated;
+        public event EventHandler<LogicDaysToElectionChangedEventArgs> daysToElectionChanged;
+
+        private IDisposable CandidateRepoSubscriptionHandle;
 
         public CandidateCollection(ICandidateRepository candidateRepository)
         {
             this._candidateRepository = candidateRepository;
+
+            CandidateRepoSubscriptionHandle = _candidateRepository.Subscribe(this);
 
             candidateRepository.CandidatesUpdated += () => CandidatesUpdated?.Invoke();
         }
@@ -24,17 +29,6 @@ namespace ClientLogic
             return _candidateRepository.GetAllCandidates()
                 .Select(candidatePerson => new CandidatePerson(candidatePerson))
                 .Cast<ICandidatePerson>().ToList();
-
-
-           // throw new NotImplementedException();
-            //List<ICandidatePerson> candidates;
-           /* foreach(ICandidateModel candidate in _candidateRepository.GetAllCandidates())
-            {
-                ICandidatePerson(candidate)
-
-                candidates.Add(CandidatePerson(candidate));
-            }
-            */
         }
 
 
@@ -60,6 +54,21 @@ namespace ClientLogic
         public int getDays()
         {
             return _candidateRepository.getDays();
+        }
+
+        public void OnCompleted()
+        {
+            CandidateRepoSubscriptionHandle.Dispose();
+        }
+
+        public void OnError(Exception error)
+        {
+            
+        }
+
+        public void OnNext(DaysToElectionChangedEventArgs value)
+        {
+            daysToElectionChanged?.Invoke(this, new LogicDaysToElectionChangedEventArgs(value));
         }
     }
 }

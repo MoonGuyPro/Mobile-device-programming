@@ -16,6 +16,9 @@ namespace ClientLogic
 
     public interface ICandidateCollection
     {
+        public event EventHandler<LogicDaysToElectionChangedEventArgs> daysToElectionChanged;
+
+        public event Action? CandidatesUpdated;
         public List<ICandidatePerson> GetCandidates();
         public int GetVotesForCandidate(int id);
         public Task VoteForCandidate(int id);   
@@ -60,5 +63,20 @@ namespace ClientLogic
         public abstract event EventHandler<int> UpdateDaysToElection;
         public abstract Task SendVotingReminderPeriodically();
         public abstract ILogicConnectionService GetConnectionService();
+
+    }
+    public class LogicDaysToElectionChangedEventArgs : EventArgs
+    {
+        public int DaysToElection { get; }
+
+        public LogicDaysToElectionChangedEventArgs(int newDaysToElection)
+        {
+            this.DaysToElection = newDaysToElection;
+        }
+
+        internal LogicDaysToElectionChangedEventArgs(DaysToElectionChangedEventArgs args)
+        {
+            DaysToElection = args.DaysToElection;
+        }
     }
 }
