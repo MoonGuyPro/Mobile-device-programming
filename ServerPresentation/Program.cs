@@ -18,6 +18,7 @@ namespace ServerPresentation
 		private Program(LogicAbstractApi logicAbstractApi)
 		{
 			this.logicAbstractApi = logicAbstractApi;
+			//logicAbstractApi.GetCandidates().DaysToElectionChanged += OnUpdateDaysToElectionAsync;
 		}
 
 
@@ -95,6 +96,18 @@ namespace ServerPresentation
 				//await webSocketConnection.SendAsync(votingMessage);
 			}
 		}
+
+/*		private async void HandleDaysChanged(object sender, LogicDaysToElectionChangedEventArgs args)
+        {
+			if (webSocketConnection == null)
+				return;
+
+			Serializer serializer = Serializer.Create();
+			string responseJson = serializer.Serialize(inflationChangedResponse);
+			Console.WriteLine(responseJson);
+
+			await webSocketConnection.SendAsync(responseJson);
+		}*/
 
 		private async Task SendCandidates()
         {

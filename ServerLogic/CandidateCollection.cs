@@ -11,9 +11,18 @@ namespace ServerLogic
     {
         private readonly ICandidateRepository _candidateRepository;
 
+        public event EventHandler<LogicDaysToElectionChangedEventArgs> DaysToElectionChanged;
+
         public CandidateCollection(ICandidateRepository candidateRepository)
         {
             this._candidateRepository = candidateRepository;
+
+            _candidateRepository.DaysToElectionChanged += HandleOnDaysChanged;
+        }
+
+        private void HandleOnDaysChanged(object sender, DaysToElectionChangedEventArgs args)
+        {
+            DaysToElectionChanged?.Invoke(this, new LogicDaysToElectionChangedEventArgs(args));
         }
 
         public void AddVote(int id)

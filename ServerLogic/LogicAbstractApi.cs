@@ -16,6 +16,7 @@ namespace ServerLogic
 
     public interface ICandidateCollection
     {
+        public event EventHandler<LogicDaysToElectionChangedEventArgs> DaysToElectionChanged;
         public List<ICandidatePerson> GetCandidates();
         public int GetVotesForCandidate(int id);
 
@@ -44,6 +45,20 @@ namespace ServerLogic
         public abstract Task SendVotingReminderPeriodically();
 
 
-        
     }
+    public class LogicDaysToElectionChangedEventArgs : EventArgs
+    {
+        public int DaysToElection { get; }
+
+        public LogicDaysToElectionChangedEventArgs(int daysToElection)
+        {
+            DaysToElection = daysToElection;
+        }
+
+        internal LogicDaysToElectionChangedEventArgs(DaysToElectionChangedEventArgs args)
+        {
+            this.DaysToElection = args.DaysToElection;
+        }
+    }
+
 }
