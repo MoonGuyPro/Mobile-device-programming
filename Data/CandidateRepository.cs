@@ -15,9 +15,14 @@ namespace ClientData
 
         private readonly IConnectionService connectionService;
 
+        private object electionLock = new object();
+        private object candidatesLock = new object();
+        private object voteLock = new object();
+
         public event Action? CandidatesUpdate;
 
         public int daysToElection = 220;
+
 
         public CandidateRepository(IConnectionService connectionService)
         {
@@ -56,63 +61,93 @@ namespace ClientData
             if (responce.daysToElection == null)
                 return;
 
-            System.Diagnostics.Debug.WriteLine($"cands");
-            daysToElection = responce.daysToElection;
+            lock (electionLock)
+            {
+                System.Diagnostics.Debug.WriteLine($"cands");
+                daysToElection = responce.daysToElection;
+            }
+
         }
 
         private void UpdateAllCandidates(UpdateAllResponce responce)
         {
             if (responce.candidates == null)
                 return;
-
-            _candidates.Clear();
-            foreach (CandidateDTO candidate in responce.candidates)
+            lock (candidatesLock)
             {
-                _candidates.Add(candidate.ToCandidate());
+                _candidates.Clear();
+                foreach (CandidateDTO candidate in responce.candidates)
+                {
+                    _candidates.Add(candidate.ToCandidate());
+                }
             }
+
         }
 
         public void AddCandidate(int id, string name)
         {
-            _candidates.Add(new CandidateModel(id, name));
+            lock (candidatesLock)
+            {
+                _candidates.Add(new CandidateModel(id, name));
+            }
+            
         }
 
         public List<ICandidateModel> GetAllCandidates()
         {
             List<ICandidateModel> candidates = new List<ICandidateModel>();
-
-            candidates.AddRange(_candidates);
+            lock(candidatesLock)
+            {
+                candidates.AddRange(_candidates);
+            }
+            
 
             return candidates;
         }
 
         public void RemoveCandidate(int id)
         {
-            _candidates.RemoveAt(id-1);
+            lock (candidatesLock)
+            {
+                _candidates.RemoveAt(id - 1);
+            }
+            
         }
 
         public int GetVotesNumberForCandidate(int id)
         {
-            foreach(CandidateModel candidate in _candidates)
+            lock (voteLock)
             {
-                if(candidate.Id == id)
-                    return candidate.VotesNumber;
+                foreach (CandidateModel candidate in _candidates)
+                {
+                    if (candidate.Id == id)
+                        return candidate.VotesNumber;
+                }
+                return 0;
             }
-            return 0;
+
         }
 
         public void AddVote(int id)
         {
-            foreach (CandidateModel candidate in _candidates)
+            lock (voteLock)
             {
-                if (candidate.Id == id)
-                    candidate.VotesNumber++;
+                foreach (CandidateModel candidate in _candidates)
+                {
+                    if (candidate.Id == id)
+                        candidate.VotesNumber++;
+                }
             }
+
         }
 
         public int getDays()
         {
-            return daysToElection;
+            lock (electionLock)
+            {
+                return daysToElection;
+            }
+            
         }
         public async Task RequestCandidates()
         {
