@@ -5,7 +5,7 @@ namespace ClientApi
 	[Serializable]
 	public abstract class ServerCommand
 	{
-		public string Header;
+		public string Header { get; set; }
 
 		protected ServerCommand(string header)
 		{
@@ -28,9 +28,9 @@ namespace ClientApi
 	[Serializable]
 	public struct CandidateDTO
 	{
-		public int Id;
-		public string Name;
-		public int Votes;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public int Votes { get; set; }
 
 		public CandidateDTO(int id, string name, int votes)
 		{
@@ -76,7 +76,7 @@ namespace ClientApi
     {
 		public static readonly string StaticHeader = "VotingResponce";
 
-		public int id;
+		public int id { get; set; }
 
 		public VotingResponce() : base(StaticHeader) { }
     }
@@ -85,7 +85,7 @@ namespace ClientApi
     {
 		public static readonly string StaticHeader = "VoringReminder";
 
-		public int daysToElection;
+		public int daysToElection { get; set; }
 
 		public VotingReminder() : base(StaticHeader) { }
 
