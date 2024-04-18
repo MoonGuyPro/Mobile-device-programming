@@ -17,7 +17,7 @@ namespace ClientData
 
         public event Action? CandidatesUpdate;
 
-        public int daysToElection = 22;
+        public int daysToElection = 220;
 
         public CandidateRepository(IConnectionService connectionService)
         {
@@ -56,6 +56,7 @@ namespace ClientData
             if (responce.daysToElection == null)
                 return;
 
+            System.Diagnostics.Debug.WriteLine($"cands");
             daysToElection = responce.daysToElection;
         }
 

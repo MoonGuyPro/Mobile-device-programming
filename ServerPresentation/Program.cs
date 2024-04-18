@@ -32,7 +32,7 @@ namespace ServerPresentation
 		private void OnConnect(WebSocketConnection connection)
 		{
 			Console.WriteLine($"Connected to {connection}");
-			//logicAbstractApi.UpdateDaysToElection += OnUpdateDaysToElection;
+			logicAbstractApi.UpdateDaysToElection += OnUpdateDaysToElectionAsync;
 			Task.Run(() => logicAbstractApi.SendVotingReminderPeriodically());
 			connection.OnMessage = OnMessage;
 			connection.OnError = OnError;
@@ -40,11 +40,33 @@ namespace ServerPresentation
 
 			webSocketConnection = connection;
 		}
-/*		private void OnUpdateDaysToElection(object sender, int days)
+		/*		private void OnUpdateDaysToElection(object sender, int days)
+				{
+					DaysToElection = days;
+				}*/
+		private void OnUpdateDaysToElectionAsync(object sender, int days)
 		{
-			DaysToElection = days;
-		}*/
-		private async void OnMessage(string message)
+			if (webSocketConnection == null)
+				return;
+
+			Console.WriteLine("Days left sent : " , days);
+
+			VotingReminder serverResponce = new VotingReminder();
+			serverResponce.daysToElection = days;
+
+			Serializer serializer = Serializer.Create();
+			string responceJson = serializer.Serialize(serverResponce);
+			Console.WriteLine(responceJson);
+			Task.Run(async () => await SendHelp(responceJson));
+		}
+		private async Task SendHelp(string responceJson)
+		{
+			if (webSocketConnection == null)
+				return;
+			await webSocketConnection.SendAsync(responceJson);
+		}
+
+			private async void OnMessage(string message)
 		{
 			if (webSocketConnection == null)
 				return;
