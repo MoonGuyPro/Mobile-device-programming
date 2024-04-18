@@ -18,10 +18,27 @@ namespace LogicTest
         public int VotesNumber { get; set; }
     }
 
+    public class CandidateRepositoryDisposableMock : IDisposable
+    {
+        private readonly CandidateRepoMock candidateRepository;
+        private readonly IObserver<DaysToElectionChangedEventArgs> observer;
 
-    public class CandidateRepoMock : ICandidateRepository
+        public CandidateRepositoryDisposableMock(CandidateRepoMock candidateRepository, IObserver<DaysToElectionChangedEventArgs> observer)
+        {
+            this.candidateRepository = candidateRepository;
+            this.observer = observer;
+        }
+        public void Dispose()
+        {
+            candidateRepository.UnSubscribe(observer);
+        }
+    }
+
+
+    public class CandidateRepoMock : ICandidateRepository, IObserver<DaysToElectionChangedEventArgs>
     {
         private readonly List<ICandidateModel> allCandidates;
+        private HashSet<IObserver<DaysToElectionChangedEventArgs>> observers;
 
         public CandidateRepoMock()
         {
@@ -67,6 +84,21 @@ namespace LogicTest
             throw new NotImplementedException();
         }
 
+        public void OnCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(DaysToElectionChangedEventArgs value)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveCandidate(int id)
         {
             var candidateToRemove = allCandidates.FirstOrDefault(c => c.Id == id);
@@ -83,16 +115,25 @@ namespace LogicTest
             throw new NotImplementedException();
         }
 
-        public IDisposable Subscribe(IObserver<DaysToElectionChangedEventArgs> observer)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task VoteForCandidate(int id)
         {
             throw new NotImplementedException();
         }
+
+        public IDisposable Subscribe(IObserver<DaysToElectionChangedEventArgs> observer)
+        {
+            //observers.Add(observer);
+            return new CandidateRepositoryDisposableMock(this, observer);
+        }
+
+        public void UnSubscribe(IObserver<DaysToElectionChangedEventArgs> observer)
+        {
+            //observers.Remove(observer);
+        }
+
     }
+
     public class ConnectionServiceMock : IConnectionService
     {
         public event Action<string>? Logger;
@@ -147,7 +188,7 @@ namespace LogicTest
         [TestMethod]
         public void CheckCandidate()
         {
-            //System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {ESAbstract.GetCandidates().GetCandidates().Count}");
+            System.Diagnostics.Debug.WriteLine($"Voted for candidate ID: {logicApi.GetCandidates().GetCandidates().Count}");
             
             Assert.IsTrue(logicApi.GetCandidates().GetCandidates().Count == 3);
             Assert.IsTrue(logicApi.GetCandidates().GetCandidates().First().Id == 1);
