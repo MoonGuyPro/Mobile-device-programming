@@ -10,10 +10,14 @@ namespace Model
     public class CandidateRepositoryPresentation
     {
         private ICandidateCollection _candidateCollection { get; set; }
+        public event EventHandler<ModelDaysToElectionChangedEventArgs> DaysToElectionChanged;
+        public Action? OnCandidatesUpdated;
 
         public CandidateRepositoryPresentation(ICandidateCollection candidateCollection)
         {
             this._candidateCollection = candidateCollection;
+            candidateCollection.CandidatesUpdated += () => OnCandidatesUpdated?.Invoke();
+            candidateCollection.daysToElectionChanged += (obj, args) => DaysToElectionChanged?.Invoke(this, new ModelDaysToElectionChangedEventArgs(args));
         }
 
         public List<CandidatePresentation> GetCandidates()

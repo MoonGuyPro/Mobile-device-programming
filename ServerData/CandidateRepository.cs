@@ -12,17 +12,37 @@ namespace ServerData
         private List<CandidateModel> _candidates = new List<CandidateModel>();
         private object candidatesLock = new object();
         private object electionLock = new object();
-        private object votesLock = new object();    
+        private object votesLock = new object();
+
+        public event EventHandler<DaysToElectionChangedEventArgs>? DaysToElectionChanged;
 
         public CandidateRepository()
         {
-            AddCandidate(1, "Candidate 1");
+            AddCandidate(1, "Candidate 11");
             AddCandidate(2, "Candidate 2");
             AddCandidate(3, "Candidate 3");
             AddCandidate(4, "Candidate 4");
             AddCandidate(5, "Candidate 5");
 
             //this.connectionService.OnMessage += OnMessage;
+        }
+
+
+        public async void SendVotingReminderPeriodically()
+        {
+            while (true)
+            {
+                DateTime electionDay = new DateTime(2024, 05, 10); // Przykładowa data wyborów
+                TimeSpan timeRemaining = electionDay - DateTime.Today; // Czas pozostały do wyborów
+                //System.Diagnostics.Debug.WriteLine(timeRemaining);
+
+                // Aktualizacja liczby dni pozostałych do wyborów w MainViewModel
+                //UpdateDaysToElection?.Invoke(this, timeRemaining.Days);
+                DaysToElectionChanged?.Invoke(this, new DaysToElectionChangedEventArgs(timeRemaining.Days));
+
+                // Poczekaj jeden dzień
+                await Task.Delay(TimeSpan.FromDays(1)); // Sprawdź co dzień
+            }
         }
 
         public void AddCandidate(int id, string name)

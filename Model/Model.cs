@@ -12,6 +12,9 @@ namespace Model
         private LogicAbstractApi electionService;
         public CandidateRepositoryPresentation candidateRepositoryPresentation { get; private set; }
         public ModelConnectionService ModelConnectionService { get; private set; }
+
+        public event Action? CandidatesUpdated;
+
         public Model(LogicAbstractApi? electionServiceAbstract)
         {
             electionService = electionServiceAbstract == null ? LogicAbstractApi.Create() : electionServiceAbstract;
@@ -31,5 +34,20 @@ namespace Model
             return this.electionService;
         }
 
+    }
+
+    public class ModelDaysToElectionChangedEventArgs : EventArgs
+    {
+        public int DaysToElection { get; }
+
+        public ModelDaysToElectionChangedEventArgs(int daysToElection)
+        {
+            this.DaysToElection = daysToElection;
+        }
+
+        internal ModelDaysToElectionChangedEventArgs(LogicDaysToElectionChangedEventArgs args)
+        {
+            this.DaysToElection = args.DaysToElection;
+        }
     }
 }

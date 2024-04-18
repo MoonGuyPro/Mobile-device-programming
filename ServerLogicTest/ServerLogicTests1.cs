@@ -39,6 +39,9 @@ namespace ServerLogicTest
             };
 
         }
+
+        public event EventHandler<DaysToElectionChangedEventArgs> DaysToElectionChanged;
+
         public void AddCandidate(int id, string name)
         {
             var existingCandidate = allCandidates.FirstOrDefault(c => c.Id == id);

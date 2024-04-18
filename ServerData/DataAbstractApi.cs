@@ -15,6 +15,7 @@ namespace ServerData
 
 	public interface ICandidateRepository
 	{
+		public event EventHandler<DaysToElectionChangedEventArgs> DaysToElectionChanged;
 		public void AddCandidate(int id, string name);
 		public void RemoveCandidate(int id);
 		public List<ICandidateModel> GetAllCandidates();
@@ -31,4 +32,14 @@ namespace ServerData
 
 		public abstract ICandidateRepository GetCandidateRepository();
 	}
+
+	public class DaysToElectionChangedEventArgs : EventArgs
+    {
+		public int DaysToElection { get; }
+
+		public DaysToElectionChangedEventArgs(int daysToElection)
+        {
+			this.DaysToElection = daysToElection;
+        }
+    }
 }

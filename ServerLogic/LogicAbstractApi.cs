@@ -43,6 +43,7 @@ namespace ServerLogic
         public abstract event EventHandler<int> UpdateDaysToElection;
         public abstract Task SendVotingReminderPeriodically();
 
+
         
     }
 }

@@ -11,7 +11,8 @@ namespace ViewModel
     public class MainViewModel : ViewModelBase
     {
         private Model.Model model;
-        private ObservableCollection<CandidatePresentation> _candidates;
+        //private ObservableCollection<CandidatePresentation> _candidates;
+        private AsyncObservableCollection<CandidatePresentation> _candidates;
         private CandidatePresentation _selectedCandidate;
         private int _daysToElection;
         private string connectionString;
@@ -24,7 +25,7 @@ namespace ViewModel
 
         }
 
-        public ObservableCollection<CandidatePresentation> Candidates
+        public AsyncObservableCollection<CandidatePresentation> Candidates
         {
             get => _candidates;
             set
@@ -65,7 +66,7 @@ namespace ViewModel
             model.ModelConnectionService.Logger += Log;
             model.ModelConnectionService.OnMessage += OnMessage;
             Task.Run(async () => await RequestWait());
-            Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+            Candidates = new AsyncObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
             Task.Run(async () => await CandidatesWait());
             OnConnectionStateChanged();
@@ -78,11 +79,11 @@ namespace ViewModel
         }
 
 
-        private void LoadCandidates()
+/*        private void LoadCandidates()
         {
             var candidates = model.candidateRepositoryPresentation.GetCandidates();
             Candidates = new ObservableCollection<CandidatePresentation>(candidates);
-        }
+        }*/
 
         private void VoteForCandidate(object candidateId)
         {
@@ -100,8 +101,8 @@ namespace ViewModel
 
         private async Task CandidatesWait()
         {
-            await Task.Delay(3000);
-            Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+            //await Task.Delay(3000);
+            Candidates = new AsyncObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
         }
 
         private async Task RequestWait()
