@@ -33,6 +33,9 @@ namespace LogicTest
             };
 
         }
+
+        public event Action? CandidatesUpdated;
+
         public void AddCandidate(int id, string name)
         {
             var existingCandidate = allCandidates.FirstOrDefault(c => c.Id == id);
@@ -76,6 +79,11 @@ namespace LogicTest
         }
 
         public void RequestUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDisposable Subscribe(IObserver<DaysToElectionChangedEventArgs> observer)
         {
             throw new NotImplementedException();
         }

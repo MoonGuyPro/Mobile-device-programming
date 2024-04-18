@@ -10,10 +10,13 @@ namespace ClientLogic
     internal class CandidateCollection : ICandidateCollection
     {
         private readonly ICandidateRepository _candidateRepository;
+        public event Action? CandidatesUpdated;
 
         public CandidateCollection(ICandidateRepository candidateRepository)
         {
             this._candidateRepository = candidateRepository;
+
+            candidateRepository.CandidatesUpdated += () => CandidatesUpdated?.Invoke();
         }
 
         public List<ICandidatePerson> GetCandidates()

@@ -12,6 +12,7 @@ namespace ClientData
     internal class CandidateRepository : ICandidateRepository
     {
         private List<ICandidateModel> _candidates = new List<ICandidateModel>();
+        private HashSet<IObserver<DaysToElectionChangedEventArgs>> observers;
 
         private readonly IConnectionService connectionService;
 
@@ -20,12 +21,15 @@ namespace ClientData
         private object voteLock = new object();
 
         public event Action? CandidatesUpdate;
+        public event Action? CandidatesUpdated;
 
         public int daysToElection = 220;
 
 
         public CandidateRepository(IConnectionService connectionService)
         {
+            observers = new HashSet<IObserver<DaysToElectionChangedEventArgs>>();
+
             AddCandidate(1, "Candidate 1");
             AddCandidate(2, "Candidate 2");
             AddCandidate(3, "Candidate 3");
@@ -35,6 +39,15 @@ namespace ClientData
 
             this.connectionService = connectionService;
             this.connectionService.OnMessage += OnMessage;
+        }
+
+        ~CandidateRepository()
+        {
+            List<IObserver<DaysToElectionChangedEventArgs>> cachedObservers = observers.ToList();
+            foreach (IObserver<DaysToElectionChangedEventArgs>? observer in cachedObservers)
+            {
+                observer?.OnCompleted();
+            }
         }
 
         private void OnMessage(string message)
@@ -67,6 +80,11 @@ namespace ClientData
                 daysToElection = responce.daysToElection;
             }
 
+            foreach(IObserver<DaysToElectionChangedEventArgs> observer in observers)
+            {
+                observer.OnNext(new DaysToElectionChangedEventArgs(responce.daysToElection));
+            }
+
         }
 
         private void UpdateAllCandidates(UpdateAllResponce responce)
@@ -81,7 +99,7 @@ namespace ClientData
                     _candidates.Add(candidate.ToCandidate());
                 }
             }
-
+            CandidatesUpdate?.Invoke();
         }
 
         public void AddCandidate(int id, string name)
@@ -174,5 +192,31 @@ namespace ClientData
             }
         }
 
+        public IDisposable Subscribe(IObserver<DaysToElectionChangedEventArgs> observer)
+        {
+            observers.Add(observer);
+            return new CandidateRepositoryDisposable(this, observer);
+        }
+
+        private void UnSubscribe(IObserver<DaysToElectionChangedEventArgs> observer)
+        {
+            observers.Remove(observer);
+        }
+
+        private class CandidateRepositoryDisposable : IDisposable
+        {
+            private readonly CandidateRepository candidateRepository;
+            private readonly IObserver<DaysToElectionChangedEventArgs> observer;
+
+            public CandidateRepositoryDisposable(CandidateRepository candidateRepository, IObserver<DaysToElectionChangedEventArgs> observer)
+            {
+                this.candidateRepository = candidateRepository;
+                this.observer = observer;
+            }
+            public void Dispose()
+            {
+                candidateRepository.UnSubscribe(observer);
+            }
+        }
     }
 }

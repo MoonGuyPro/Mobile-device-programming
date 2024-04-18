@@ -14,8 +14,9 @@ namespace ClientData
 		int VotesNumber { get; set; }
 	}
 
-	public interface ICandidateRepository
+	public interface ICandidateRepository : IObservable<DaysToElectionChangedEventArgs>
 	{
+		public event Action? CandidatesUpdated;
 		public Task VoteForCandidate(int id);
 		public void AddCandidate(int id, string name);
 		public void RemoveCandidate(int id);
@@ -54,4 +55,14 @@ namespace ClientData
 		public abstract ICandidateRepository GetCandidateRepository();
 		public abstract IConnectionService GetConnectionService();
 	}
+
+	public class DaysToElectionChangedEventArgs : EventArgs
+    {
+		public int DaysToElection { get; }
+
+		public DaysToElectionChangedEventArgs(int daysToElection)
+        {
+			DaysToElection = daysToElection;	
+        }
+    }
 }
