@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerDataTest", "ServerDat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerLogicTest", "ServerLogicTest\ServerLogicTest.csproj", "{DF170CE1-5950-4776-A847-107E3BDDB01E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerPresentation", "ServerPresentation\ServerPresentation.csproj", "{938F14B7-5DAE-49AC-87B6-D483B54A661B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerPresentation", "ServerPresentation\ServerPresentation.csproj", "{938F14B7-5DAE-49AC-87B6-D483B54A661B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiModelGenerator", "ApiModelGenerator\ApiModelGenerator.csproj", "{8C4BED4B-545E-4AA0-84DE-6435A74873B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{938F14B7-5DAE-49AC-87B6-D483B54A661B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{938F14B7-5DAE-49AC-87B6-D483B54A661B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{938F14B7-5DAE-49AC-87B6-D483B54A661B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4BED4B-545E-4AA0-84DE-6435A74873B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4BED4B-545E-4AA0-84DE-6435A74873B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4BED4B-545E-4AA0-84DE-6435A74873B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4BED4B-545E-4AA0-84DE-6435A74873B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
