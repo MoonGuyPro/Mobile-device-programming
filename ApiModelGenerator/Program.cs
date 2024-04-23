@@ -6,6 +6,7 @@ namespace ApiModelGenerator;
 
 internal static class Program
 {
+	//mozna zrobic to w testach zamiast tutaj w exe ale to dziala wiec po co psuc
 	private static async Task Main(string[] args)
 	{
 		Console.WriteLine("JSON Schema: \n\n");

@@ -62,28 +62,27 @@ namespace ViewModel
         public MainViewModel()
         {
             this.model = new Model.Model(null);
+            model.ModelConnectionService.OnConnectionStateChanged += OnConnectionStateChanged;
 
             model.ModelConnectionService.Logger += Log;
             model.ModelConnectionService.OnMessage += OnMessage;
-            Task.Run(async () => await RequestWait());
+            model.candidateRepositoryPresentation.OnCandidatesUpdated += OnCandidatesUpdated;
+            //Task.Run(async () => await RequestWait());
             Candidates = new AsyncObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
-            Task.Run(async () => await CandidatesWait());
+            //Task.Run(async () => await CandidatesWait());
             OnConnectionStateChanged();
-
             // Zarejestruj się na zdarzenie UpdateDaysToElection
             //model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             //Task.Run(() => model.GetService().SendVotingReminderPeriodically());
             Task.Run(async () => await CheckChangesLoop());
 
         }
-
-
-/*        private void LoadCandidates()
+        private void OnCandidatesUpdated()
         {
-            var candidates = model.candidateRepositoryPresentation.GetCandidates();
-            Candidates = new ObservableCollection<CandidatePresentation>(candidates);
-        }*/
+            Candidates = new AsyncObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
+            //System.Diagnostics.Debug.WriteLine($"cands");
+        }
 
         private void VoteForCandidate(object candidateId)
         {
@@ -97,18 +96,6 @@ namespace ViewModel
                //Candidates = new ObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
            }
 
-        }
-
-        private async Task CandidatesWait()
-        {
-            //await Task.Delay(3000);
-            Candidates = new AsyncObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
-        }
-
-        private async Task RequestWait()
-        {
-            await Task.Delay(1000);
-            model.candidateRepositoryPresentation.RequestUpdate();
         }
 
         private async Task CheckChangesLoop()
@@ -128,6 +115,7 @@ namespace ViewModel
             if (!actualState)
             {
                 Task.Run(() => model.ModelConnectionService.Connect(new Uri(@"ws://localhost:21370")));
+                model.candidateRepositoryPresentation.RequestUpdate();
             }
             else
             {

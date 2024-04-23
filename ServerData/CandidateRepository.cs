@@ -18,7 +18,7 @@ namespace ServerData
 
         public CandidateRepository()
         {
-            AddCandidate(1, "Candidate 11");
+            AddCandidate(1, "Candidate From Server 1");
             AddCandidate(2, "Candidate 2");
             AddCandidate(3, "Candidate 3");
             AddCandidate(4, "Candidate 4");

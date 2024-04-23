@@ -30,11 +30,11 @@ namespace ClientData
         {
             observers = new HashSet<IObserver<DaysToElectionChangedEventArgs>>();
 
-            AddCandidate(1, "Candidate 1");
-            AddCandidate(2, "Candidate 2");
-            AddCandidate(3, "Candidate 3");
-            AddCandidate(4, "Candidate 4");
-            AddCandidate(5, "Candidate 5");
+            AddCandidate(1, "Default Candidate");
+            //AddCandidate(2, "Candidate 2");
+            //AddCandidate(3, "Candidate 3");
+            //AddCandidate(4, "Candidate 4");
+            //AddCandidate(5, "Candidate 5");
 
 
             this.connectionService = connectionService;
@@ -76,7 +76,6 @@ namespace ClientData
 
             lock (electionLock)
             {
-                System.Diagnostics.Debug.WriteLine($"cands");
                 daysToElection = responce.daysToElection;
             }
 
