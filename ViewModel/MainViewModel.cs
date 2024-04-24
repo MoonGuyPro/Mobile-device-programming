@@ -67,6 +67,7 @@ namespace ViewModel
             model.ModelConnectionService.Logger += Log;
             model.ModelConnectionService.OnMessage += OnMessage;
             model.candidateRepositoryPresentation.OnCandidatesUpdated += OnCandidatesUpdated;
+            model.candidateRepositoryPresentation.DaysToElectionChanged += LoadDays;
             //Task.Run(async () => await RequestWait());
             Candidates = new AsyncObservableCollection<CandidatePresentation>(model.candidateRepositoryPresentation.GetCandidates());
             VoteCommand = new RelayCommand(VoteForCandidate);
@@ -75,7 +76,7 @@ namespace ViewModel
             // Zarejestruj się na zdarzenie UpdateDaysToElection
             //model.GetService().UpdateDaysToElection += OnUpdateDaysToElection;
             //Task.Run(() => model.GetService().SendVotingReminderPeriodically());
-            Task.Run(async () => await CheckChangesLoop());
+            //Task.Run(async () => await CheckChangesLoop());
 
         }
         private void OnCandidatesUpdated()
@@ -97,14 +98,10 @@ namespace ViewModel
            }
 
         }
-
-        private async Task CheckChangesLoop()
+        private void LoadDays(object sender, ModelDaysToElectionChangedEventArgs args)
         {
-            while(true)
-            {
-                DaysToElection = model.candidateRepositoryPresentation.getDays();
-                await Task.Delay(10000);
-            }
+            DaysToElection = model.candidateRepositoryPresentation.getDays();
+            //System.Diagnostics.Debug.WriteLine($"days loaded");
         }
 
         private void OnConnectionStateChanged()
