@@ -12,7 +12,30 @@ namespace DataTest
 
         public void PrepareData()
         {
-            //connectionService.MockUpdateAll();
+            connectionService.MockUpdateAll(new[]
+            {
+                new ConnectionServiceMock.CandidateDTOMock { Id = 1, Name = "Andrzej" },
+                new ConnectionServiceMock.CandidateDTOMock { Id = 2, Name = "Boles³aw" }
+            });
+
+
+        }
+
+        [TestMethod]
+        public void MockUpdateAll()
+        {
+            // Przygotowanie danych wejœciowych
+            System.Collections.Generic.ICollection<ConnectionServiceMock.CandidateDTOMock> candidatesDTO = new[]
+            {
+                new ConnectionServiceMock.CandidateDTOMock { Id = 1, Name = "Andrzej" },
+                new ConnectionServiceMock.CandidateDTOMock { Id = 2, Name = "Boles³aw" }
+            };
+
+            connectionService.MockUpdateAll(candidatesDTO);
+
+            List<ICandidateModel> candidateModels = data.GetCandidateRepository().GetAllCandidates();
+
+            Assert.AreEqual(2, candidateModels.Count);
         }
 
         [TestMethod]

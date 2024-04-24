@@ -101,7 +101,7 @@ namespace ClientDataTest
         }
 
         [GeneratedCode("NJsonSchema", "11.0.0.0 (Newtonsoft.Json v13.0.0.0)")]
-        public class CandidateDTOMock
+        internal class CandidateDTOMock
         {
             [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
             public int Id { get; set; }
