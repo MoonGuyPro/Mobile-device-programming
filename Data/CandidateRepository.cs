@@ -53,11 +53,11 @@ namespace ClientData
         private void OnMessage(string message)
         {
             Serializer serializer = Serializer.Create();
-            if (serializer.GetResponseHeader(message) == UpdateAllResponce.StaticHeader)
+            if (serializer.GetResponseHeader(message) == ServerApi.UpdateAllResponceHeader)
             {
                 UpdateAllResponce responce = serializer.Deserialize<UpdateAllResponce>(message);
                 UpdateAllCandidates(responce);
-            } else if (serializer.GetResponseHeader(message) == VotingReminder.StaticHeader)
+            } else if (serializer.GetResponseHeader(message) == ServerApi.VoringReminderHeader)
             {
                 VotingReminder responce = serializer.Deserialize<VotingReminder>(message);
                 DaysToElection(responce);
@@ -71,29 +71,29 @@ namespace ClientData
 
         private void DaysToElection(VotingReminder responce)
         {
-            if (responce.daysToElection == null)
+            if (responce.DaysToElection == null)
                 return;
 
             lock (electionLock)
             {
-                daysToElection = responce.daysToElection;
+                daysToElection = responce.DaysToElection;
             }
 
             foreach(IObserver<DaysToElectionChangedEventArgs> observer in observers)
             {
-                observer.OnNext(new DaysToElectionChangedEventArgs(responce.daysToElection));
+                observer.OnNext(new DaysToElectionChangedEventArgs(responce.DaysToElection));
             }
 
         }
 
         private void UpdateAllCandidates(UpdateAllResponce responce)
         {
-            if (responce.candidates == null)
+            if (responce.Candidates == null)
                 return;
             lock (candidatesLock)
             {
                 _candidates.Clear();
-                foreach (CandidateDTO candidate in responce.candidates)
+                foreach (CandidateDTO candidate in responce.Candidates)
                 {
                     _candidates.Add(candidate.ToCandidate());
                 }
@@ -185,7 +185,8 @@ namespace ClientData
             if (connectionService.IsConnected())
             {
                 Serializer serializer = Serializer.Create();
-                VoteForCandidateCommand voteForCandidateCommand = new VoteForCandidateCommand(id);
+                VoteForCandidateCommand voteForCandidateCommand = new VoteForCandidateCommand();
+                voteForCandidateCommand.CandidateId = id;
                 await connectionService.SendAsync(serializer.Serialize(voteForCandidateCommand));   
 
             }

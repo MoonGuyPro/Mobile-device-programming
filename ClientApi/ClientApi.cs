@@ -53,10 +53,10 @@ namespace ClientApi
 
 	[Serializable]
 	public class UpdateAllResponce : ServerResponse
-    {
+	{
 		public static readonly string StaticHeader = "UpdateAllCandidates";
 
-		public CandidateDTO[]? candidates;
+		public CandidateDTO[]? candidates { get; set; }
 
 		public UpdateAllResponce() : base(StaticHeader) { }
     }
@@ -64,11 +64,11 @@ namespace ClientApi
 	[Serializable]
 	public class VoteForCandidateCommand : ServerCommand
     {
-		public static string StaticHeader = "VoteForCandidate";
+		public static readonly string StaticHeader = "VoteForCandidate";
 
-		public int CandidateId;
+		public int CandidateId	{ get; set; }
 
-		public VoteForCandidateCommand(int candidateId) : base(StaticHeader) { CandidateId = candidateId; }
+	public VoteForCandidateCommand(int candidateId) : base(StaticHeader) { CandidateId = candidateId; }
 	}
 
 	[Serializable]

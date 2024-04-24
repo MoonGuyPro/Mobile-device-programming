@@ -10,7 +10,7 @@ internal static class Program
 	private static async Task Main(string[] args)
 	{
 		Console.WriteLine("JSON Schema: \n\n");
-		JsonSchema schema = JsonSchema.FromType<GetCandidatesCommand>();
+		JsonSchema schema = JsonSchema.FromType<VoteForCandidateCommand>();
 		string schemaString = schema.ToJson();
 
 		Console.WriteLine(schemaString);
