@@ -186,7 +186,7 @@ namespace ClientData
             if (connectionService.IsConnected())
             {
                 Serializer serializer = Serializer.Create();
-                VoteForCandidateCommand voteForCandidateCommand = new VoteForCandidateCommand();
+                VoteForCandidateCommand voteForCandidateCommand = new VoteForCandidateCommand { Header = ServerApi.VoteForCandidateCommandHeader };
                 voteForCandidateCommand.CandidateId = id;
                 await connectionService.SendAsync(serializer.Serialize(voteForCandidateCommand));   
 

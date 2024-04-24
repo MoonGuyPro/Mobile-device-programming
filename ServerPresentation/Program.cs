@@ -92,7 +92,7 @@ namespace ServerPresentation
 				logicAbstractApi.GetCandidates().AddVote(votesForCandidateCommand.CandidateId);
 
 				//string votingMessage = serializer.Serialize(votingResponce);
-				//Console.WriteLine($"Send: {votingMessage}");
+				//Console.WriteLine($"Send: {votesForCandidateCommand.CandidateId}");
 				//await webSocketConnection.SendAsync(votingMessage);
 			}
 		}
