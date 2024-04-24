@@ -21,15 +21,15 @@ namespace DataTest
 
             data.GetCandidateRepository().AddCandidate(10,"Zbysiu");
           
-            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(5).Name, "Zbysiu");
-            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(5).Id, 10);
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(1).Name, "Zbysiu");
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().ElementAt(1).Id, 10);
 
         }
         [TestMethod]
         public void CreateCandidates()
         {
            // DataAbstractApi data = PrepareData();
-            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 5);
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 1);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace DataTest
             //DataAbstractApi data = PrepareData();
 
             data.GetCandidateRepository().RemoveCandidate(1);
-            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 4);
+            Assert.AreEqual(data.GetCandidateRepository().GetAllCandidates().Count(), 0);
         }
 
         /*

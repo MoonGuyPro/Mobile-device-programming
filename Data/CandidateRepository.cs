@@ -55,7 +55,6 @@ namespace ClientData
             Serializer serializer = Serializer.Create();
             if (serializer.GetResponseHeader(message) == ServerApi.UpdateAllResponceHeader)
             {
-                System.Diagnostics.Debug.WriteLine($"cands");
                 UpdateAllResponce responce = serializer.Deserialize<UpdateAllResponce>(message);
                 UpdateAllCandidates(responce);
             } else if (serializer.GetResponseHeader(message) == ServerApi.VoringReminderHeader)
@@ -171,7 +170,6 @@ namespace ClientData
         {
             Serializer serializer = Serializer.Create();
             GetCandidatesCommand itemsCommand = new GetCandidatesCommand { Header = ServerApi.GetCandidatesCommandHeader };
-            System.Diagnostics.Debug.WriteLine($"it wants to get the cands");
             await connectionService.SendAsync(serializer.Serialize(itemsCommand));
         }
 
