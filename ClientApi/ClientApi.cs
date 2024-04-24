@@ -56,7 +56,7 @@ namespace ClientApi
 	{
 		public static readonly string StaticHeader = "UpdateAllCandidates";
 
-		public CandidateDTO[]? candidates { get; set; }
+		public CandidateDTO[]? Candidates { get; set; }
 
 		public UpdateAllResponce() : base(StaticHeader) { }
     }

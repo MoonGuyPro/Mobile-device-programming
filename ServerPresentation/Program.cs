@@ -39,8 +39,8 @@ namespace ServerPresentation
 			connection.OnMessage = OnMessage;
 			connection.OnError = OnError;
 			connection.OnClose = OnClose;
-
 			webSocketConnection = connection;
+
 		}
 		/*		private void OnUpdateDaysToElection(object sender, int days)
 				{
@@ -118,7 +118,7 @@ namespace ServerPresentation
 			
 			UpdateAllResponce serverResponce = new UpdateAllResponce();
 			List<ICandidatePerson> candidates = logicAbstractApi.GetCandidates().GetCandidates();
-			serverResponce.candidates = candidates.Select(x => x.ToDTO()).ToArray();
+			serverResponce.Candidates = candidates.Select(x => x.ToDTO()).ToArray();
 
 			Serializer serializer = Serializer.Create();
 			string responceJson = serializer.Serialize(serverResponce);

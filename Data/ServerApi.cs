@@ -61,7 +61,7 @@ namespace ClientApi
     internal class UpdateAllResponce : ServerResponse
     {
         [Newtonsoft.Json.JsonProperty("candidates", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<CandidateDTO> Candidates { get; set; }
+        public CandidateDTO[]? Candidates { get; set; }
 
 
     }
