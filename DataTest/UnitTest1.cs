@@ -9,11 +9,12 @@ namespace DataTest
     {
         static ConnectionServiceMock connectionService = new ConnectionServiceMock();
         DataAbstractApi data = DataAbstractApi.Create(connectionService);
-        /*private DataAbstractApi PrepareData()
+
+        public void PrepareData()
         {
-            DataAbstractApi data = DataAbstractApi.Create();
-            return data;
-        }*/
+            //connectionService.MockUpdateAll();
+        }
+
         [TestMethod]
         public void AddCandidate()
         {
